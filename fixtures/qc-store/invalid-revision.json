@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2,
+  "verdicts": {
+    "sub-01": {
+      "verdict": "fail",
+      "note": "",
+      "tags": [],
+      "reviewEvidence": null,
+      "revision": "4",
+      "updatedAt": "2026-07-23T12:00:00.000Z"
+    }
+  }
+}

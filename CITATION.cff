@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: 'If you use this app in research, cite Supraspina as specified below and credit the pinned upstream SCI_Map project for methods or assets used in the work (see references). The license field covers first-party code only, as scoped in THIRD_PARTY_NOTICES; bundled and acquired third-party material keeps its own terms, recorded there and in THIRD_PARTY_PROVENANCE.json.'
+type: software
+title: 'Supraspina'
+version: '20261122.2152.0'
+date-released: '2026-11-22'
+abstract: 'Supraspina is a Linux Electron research console for a 14-stage structural-MRI workflow. It drives SynthStrip, FreeSurfer recon-all or FastSurfer, ENIGMA QC, PyBrainAge inference, BrainCharts normative modeling, and Rscript through supervised subprocesses; manages durable workflow scheduling, provenance, recovery, and process-tree cancellation; and presents cohort status, QC, results, and project configuration for review. Pipeline glue and downstream analysis stages use explicitly inventoried first-party implementations. The repository also includes the analysis code of a paper in analyses/. Supraspina is not a medical device or clinical decision system.'
+authors:
+  - given-names: 'Yusuf'
+    family-names: 'Qwareeq'
+    email: 'yusuf@qwareeq.com'
+repository-code: 'https://github.com/qwareeq8/supraspina'
+url: 'https://qwareeq.com/'
+license: MIT
+references:
+  - type: software
+    title: 'SCI_Map (structural-MRI pipeline)'
+    version: '8a8c2d3586a37bb896bd8bdc3743b43e602827e3'
+    authors:
+      - name: 'SCI_Map contributors'
+    notes: 'The pinned upstream README names Oscar Ortiz as project lead and Ryan Loke as a support contact; it does not provide a formal scholarly author list.'
+    repository-code: 'https://github.com/ortizo-117/SCI_Map'

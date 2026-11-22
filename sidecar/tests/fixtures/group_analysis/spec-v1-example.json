@@ -1,0 +1,46 @@
+{
+  "spec": {
+    "schema": "supraspina/group-analysis-spec",
+    "schemaVersion": 1,
+    "analysis": "group-comparison",
+    "measures": [
+      "aseg:Brain-Stem",
+      "dk:bi:precentral:ThickAvg",
+      "aseg:bi:Thalamus"
+    ],
+    "contrast": {
+      "type": "groups",
+      "grouping": {
+        "variable": { "source": "registry", "column": "sourceCohortLabel" },
+        "groups": [
+          { "label": "SCI", "levels": ["SCI_nNP", "SCI_P"] },
+          { "label": "CTRL", "levels": ["CTRL"] }
+        ]
+      },
+      "focal": "SCI",
+      "reference": "CTRL",
+      "model": "all-groups"
+    },
+    "covariates": {
+      "age": { "source": "registry", "column": "age" },
+      "sex": { "source": "registry", "column": "sex" },
+      "etiv": "extensive",
+      "extra": [],
+      "centering": "sample-mean"
+    },
+    "inclusion": {
+      "qc": "non-failed",
+      "registration": "set-missing",
+      "outliers": "keep"
+    },
+    "inference": {
+      "sidedness": "two-sided",
+      "correction": "maxt-fwe",
+      "family": "selected",
+      "alpha": 0.05,
+      "permutations": 5000,
+      "seed": 20260923
+    }
+  },
+  "specDigest": "35ca529245372cb81ab4e91ce96c30b6e9ebf1b958a726f34a8ada802b211ede"
+}

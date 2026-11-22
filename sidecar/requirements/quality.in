@@ -1,0 +1,6 @@
+# Install quality-only tools. Obtain runtime and freeze dependencies from the
+# platform lock.
+pip-audit==2.10.1
+pytest==9.0.3
+pytest-cov==7.1.0
+ruff==0.15.15

@@ -1,0 +1,1390 @@
+{
+ "result": {
+  "schema": "supraspina/group-analysis-result",
+  "schemaVersion": 2,
+  "resultId": "gar-0123456789abcdef",
+  "specId": null,
+  "name": "Within SCI",
+  "spec": {
+   "covariates": {
+    "age": {
+     "column": "age",
+     "source": "registry"
+    },
+    "centering": "sample-mean",
+    "extra": [],
+    "headSize": {
+     "rule": "extensive",
+     "source": "etiv"
+    },
+    "sex": {
+     "column": "sex",
+     "source": "registry"
+    }
+   },
+   "design": {
+    "population": null,
+    "scope": "between",
+    "subset": []
+   },
+   "inclusion": {
+    "minCellN": 3,
+    "outliers": "keep",
+    "qc": "non-failed",
+    "registration": "set-missing"
+   },
+   "inference": {
+    "alpha": 0.05,
+    "correction": "maxt-fwe",
+    "family": "per-test",
+    "omnibusGate": false,
+    "permutations": 1000,
+    "seed": 5,
+    "sidedness": "two-sided"
+   },
+   "measures": [
+    "aseg:Brain-Stem",
+    "aseg:bi:Thalamus",
+    "aseg:Left-Hippocampus"
+   ],
+   "schema": "supraspina/group-analysis-spec",
+   "schemaVersion": 2,
+   "stratify": {
+    "grouping": {
+     "groups": [
+      {
+       "label": "North",
+       "levels": [
+        "north"
+       ]
+      },
+      {
+       "label": "South",
+       "levels": [
+        "south"
+       ]
+      }
+     ],
+     "variable": {
+      "column": "site",
+      "source": "metadata-csv"
+     }
+    },
+    "heterogeneity": true
+   },
+   "tests": [
+    {
+     "adjustForGroup": false,
+     "extraCovariates": [],
+     "factor": {
+      "focal": "SCI",
+      "grouping": {
+       "groups": [
+        {
+         "label": "SCI",
+         "levels": [
+          "SCI_P",
+          "SCI_nNP"
+         ]
+        },
+        {
+         "label": "CTRL",
+         "levels": [
+          "CTRL"
+         ]
+        }
+       ],
+       "variable": {
+        "column": "sourceCohortLabel",
+        "source": "registry"
+       }
+      },
+      "model": "all-groups",
+      "reference": "CTRL"
+     },
+     "id": "sci",
+     "inFamily": true,
+     "kind": "two-group",
+     "label": "SCI vs CTRL",
+     "moderator": null,
+     "pairwise": "none",
+     "pairwiseFamily": "pooled",
+     "variable": null
+    },
+    {
+     "adjustForGroup": false,
+     "extraCovariates": [],
+     "factor": null,
+     "id": "score",
+     "inFamily": true,
+     "kind": "association",
+     "label": "Score",
+     "moderator": null,
+     "pairwise": "none",
+     "pairwiseFamily": "pooled",
+     "variable": {
+      "ref": {
+       "column": "score",
+       "source": "metadata-csv"
+      },
+      "transform": "none"
+     }
+    }
+   ],
+   "variables": {
+    "derived": []
+   }
+  },
+  "specDigest": "0509b351beb0144698b0a2fb88756555d293fa285212f5b1ba4050ed9b39712a",
+  "createdAt": "2026-09-30T12:00:00.000Z",
+  "engine": {
+   "build": null,
+   "id": "ols-glh-freedman-lane-v2",
+   "productVersion": "20261121.1830.0",
+   "rng": "numpy-pcg64"
+  },
+  "provisional": false,
+  "stageCurrency": {
+   "aggregate": "current",
+   "pybrainage": "outdated"
+  },
+  "inputs": [],
+  "sample": {
+   "excluded": [
+    {
+     "reason": "not-in-population",
+     "subjectId": "sub-900"
+    }
+   ],
+   "groups": [
+    {
+     "label": "SCI",
+     "n": 38
+    },
+    {
+     "label": "CTRL",
+     "n": 50
+    },
+    {
+     "label": "North",
+     "n": 42
+    },
+    {
+     "label": "South",
+     "n": 46
+    }
+   ],
+   "included": 88,
+   "issues": [
+    "One fact about the sample."
+   ]
+  },
+  "rows": [
+   {
+    "F": null,
+    "d": -0.8995021292584406,
+    "dHigh": -0.45217730146396495,
+    "dLow": -1.3419036358841774,
+    "dRawSd": -0.5361787827521438,
+    "df1": 1,
+    "df2": 83,
+    "estimate": -1161.5573114228505,
+    "family": "aseg",
+    "gated": false,
+    "inFamily": true,
+    "measureId": "aseg:Brain-Stem",
+    "nFocal": 38,
+    "nReference": 50,
+    "nTotal": 88,
+    "p": 7.601807888080625e-05,
+    "pCorrected": 0.000999000999000999,
+    "pHc3": 0.00026058814860345747,
+    "pPermutation": 0.000999000999000999,
+    "partialEta2": 0.17282077524759232,
+    "partialR": -0.41571718180464023,
+    "partialRHigh": -0.22228763753832287,
+    "partialRLow": -0.5776608893895067,
+    "pctOfReference": -5.310291159851806,
+    "se": 278.9352694325194,
+    "significant": true,
+    "slopePerSd": null,
+    "t": -4.164253999811439,
+    "termId": "term-1"
+   },
+   {
+    "F": null,
+    "d": -0.7873022014656219,
+    "dHigh": -0.3319795785603291,
+    "dLow": -1.237942969666359,
+    "dRawSd": -0.4112635899314014,
+    "df1": 1,
+    "df2": 78,
+    "estimate": -315.5702332967712,
+    "family": "aseg",
+    "gated": false,
+    "inFamily": true,
+    "measureId": "aseg:bi:Thalamus",
+    "nFocal": 36,
+    "nReference": 47,
+    "nTotal": 83,
+    "p": 0.0006776382331493086,
+    "pCorrected": 0.000999000999000999,
+    "pHc3": 0.0008796750238903824,
+    "pPermutation": 0.000999000999000999,
+    "partialEta2": 0.13844128083914944,
+    "partialR": -0.37207698240975545,
+    "partialRHigh": -0.16592469552257474,
+    "partialRLow": -0.5470700285946,
+    "pctOfReference": -4.120083346204351,
+    "se": 89.13707241743388,
+    "significant": true,
+    "slopePerSd": null,
+    "t": -3.5402804325784696,
+    "termId": "term-1"
+   },
+   {
+    "F": null,
+    "d": 0.09862515421624246,
+    "dHigh": 0.5271577069988875,
+    "dLow": -0.3305145164621059,
+    "dRawSd": 0.07291096701973233,
+    "df1": 1,
+    "df2": 81,
+    "estimate": 31.454172125467604,
+    "family": "aseg",
+    "gated": false,
+    "inFamily": true,
+    "measureId": "aseg:Left-Hippocampus",
+    "nFocal": 37,
+    "nReference": 49,
+    "nTotal": 86,
+    "p": 0.6531651194869432,
+    "pCorrected": 0.952047952047952,
+    "pHc3": 0.6700290655232599,
+    "pPermutation": 0.6363636363636364,
+    "partialEta2": 0.002505288849986278,
+    "partialR": 0.05005286055747741,
+    "partialRHigh": 0.26290388212915017,
+    "partialRLow": -0.16744414072843122,
+    "pctOfReference": 0.7638554488401096,
+    "se": 69.73682128499533,
+    "significant": false,
+    "slopePerSd": null,
+    "t": 0.45104109344076637,
+    "termId": "term-1"
+   }
+  ],
+  "skipped": [],
+  "resultSha256": "52e21df1bf5e3a569bf89c59851d6b0822ccbf695a7ebb31290ddf634fef58ef",
+  "terms": [
+   {
+    "family": "pooled:sci:t1",
+    "kind": "t",
+    "label": "SCI vs CTRL",
+    "pair": null,
+    "rank": 1,
+    "role": "effect",
+    "rowCount": 3,
+    "stratum": null,
+    "termId": "term-1",
+    "testId": "sci"
+   },
+   {
+    "family": "stratum-1:sci:t1",
+    "kind": "t",
+    "label": "SCI vs CTRL",
+    "pair": null,
+    "rank": 1,
+    "role": "effect",
+    "rowCount": 3,
+    "stratum": "North",
+    "termId": "term-2",
+    "testId": "sci"
+   },
+   {
+    "family": "stratum-2:sci:t1",
+    "kind": "t",
+    "label": "SCI vs CTRL",
+    "pair": null,
+    "rank": 1,
+    "role": "effect",
+    "rowCount": 3,
+    "stratum": "South",
+    "termId": "term-3",
+    "testId": "sci"
+   },
+   {
+    "family": "pooled:sci:heterogeneity:t1",
+    "kind": "t",
+    "label": "Heterogeneity of SCI vs CTRL across strata",
+    "pair": null,
+    "rank": 1,
+    "role": "heterogeneity",
+    "rowCount": 3,
+    "stratum": null,
+    "termId": "term-4",
+    "testId": "sci"
+   },
+   {
+    "family": "pooled:score:t1",
+    "kind": "t",
+    "label": "Score",
+    "pair": null,
+    "rank": 1,
+    "role": "effect",
+    "rowCount": 3,
+    "stratum": null,
+    "termId": "term-5",
+    "testId": "score"
+   },
+   {
+    "family": "stratum-1:score:t1",
+    "kind": "t",
+    "label": "Score",
+    "pair": null,
+    "rank": 1,
+    "role": "effect",
+    "rowCount": 3,
+    "stratum": "North",
+    "termId": "term-6",
+    "testId": "score"
+   },
+   {
+    "family": "stratum-2:score:t1",
+    "kind": "t",
+    "label": "Score",
+    "pair": null,
+    "rank": 1,
+    "role": "effect",
+    "rowCount": 3,
+    "stratum": "South",
+    "termId": "term-7",
+    "testId": "score"
+   },
+   {
+    "family": "pooled:score:heterogeneity:t1",
+    "kind": "t",
+    "label": "Heterogeneity of Score across strata",
+    "pair": null,
+    "rank": 1,
+    "role": "heterogeneity",
+    "rowCount": 3,
+    "stratum": null,
+    "termId": "term-8",
+    "testId": "score"
+   }
+  ]
+ },
+ "termRows": {
+  "resultId": "gar-0123456789abcdef",
+  "termId": "term-3",
+  "offset": 1,
+  "total": 3,
+  "rows": [
+   {
+    "F": null,
+    "d": -0.8721538526016713,
+    "dHigh": -0.22072097296071622,
+    "dLow": -1.5129051627755232,
+    "dRawSd": -0.5320903469259521,
+    "df1": 1,
+    "df2": 37,
+    "estimate": -357.1820883677172,
+    "family": "aseg",
+    "gated": false,
+    "inFamily": true,
+    "measureId": "aseg:bi:Thalamus",
+    "nFocal": 18,
+    "nReference": 24,
+    "nTotal": 42,
+    "p": 0.008506231442201143,
+    "pCorrected": 0.026973026973026972,
+    "pHc3": 0.011047930279216665,
+    "pPermutation": 0.011988011988011988,
+    "partialEta2": 0.1727354496250923,
+    "partialR": -0.4156145445302562,
+    "partialRHigh": -0.11520468393458813,
+    "partialRLow": -0.6463707524771668,
+    "pctOfReference": -4.647707621879771,
+    "se": 128.50507516955227,
+    "significant": true,
+    "slopePerSd": null,
+    "t": -2.7795173684497962,
+    "termId": "term-3"
+   },
+   {
+    "F": null,
+    "d": 0.16525963170530228,
+    "dHigh": 0.751296934941911,
+    "dLow": -0.4227795740776113,
+    "dRawSd": 0.12027777731977163,
+    "df1": 1,
+    "df2": 41,
+    "estimate": 52.55495570189748,
+    "family": "aseg",
+    "gated": false,
+    "inFamily": true,
+    "measureId": "aseg:Left-Hippocampus",
+    "nFocal": 20,
+    "nReference": 26,
+    "nTotal": 46,
+    "p": 0.5834165579334625,
+    "pCorrected": 0.9230769230769231,
+    "pHc3": 0.6099254650670253,
+    "pPermutation": 0.5594405594405595,
+    "partialEta2": 0.007397649889643478,
+    "partialR": 0.08600959184674391,
+    "partialRHigh": 0.376624322648342,
+    "partialRLow": -0.22001787029464756,
+    "pctOfReference": 1.262692129794071,
+    "se": 95.07416257967047,
+    "significant": false,
+    "slopePerSd": null,
+    "t": 0.552778528633974,
+    "termId": "term-3"
+   }
+  ],
+  "nextOffset": null
+ },
+ "measureDetail": {
+  "resultId": "gar-0123456789abcdef",
+  "measureId": "aseg:Brain-Stem",
+  "termId": "term-5",
+  "row": {
+   "F": null,
+   "d": null,
+   "dHigh": null,
+   "dLow": null,
+   "dRawSd": null,
+   "df1": 1,
+   "df2": 81,
+   "estimate": 24.646918329706292,
+   "family": "aseg",
+   "gated": false,
+   "inFamily": true,
+   "measureId": "aseg:Brain-Stem",
+   "nFocal": null,
+   "nReference": null,
+   "nTotal": 86,
+   "p": 0.09467490345584006,
+   "pCorrected": 0.2677322677322677,
+   "pHc3": 0.09708328807991451,
+   "pPermutation": 0.0969030969030969,
+   "partialEta2": 0.034099802439545045,
+   "partialR": 0.18466131820049655,
+   "partialRHigh": 0.385015645870238,
+   "partialRLow": -0.03231507066344561,
+   "pctOfReference": null,
+   "se": 14.575058701730471,
+   "significant": false,
+   "slopePerSd": 262.2908843975809,
+   "t": 1.6910338979821746,
+   "termId": "term-5"
+  },
+  "groupMeans": [],
+  "subjects": [
+   {
+    "subjectId": "sub-001",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20078.944133498087,
+    "adjusted": 21762.698868456817,
+    "x": 52.517
+   },
+   {
+    "subjectId": "sub-002",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20775.63020460736,
+    "adjusted": 21733.119405464633,
+    "x": 44.397
+   },
+   {
+    "subjectId": "sub-003",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 21933.191346027328,
+    "adjusted": 21258.221866881075,
+    "x": 54.001
+   },
+   {
+    "subjectId": "sub-004",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 20914.24867326198,
+    "adjusted": 20836.612867273543,
+    "x": 65.466
+   },
+   {
+    "subjectId": "sub-005",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23714.855856220067,
+    "adjusted": 22541.697596062073,
+    "x": 46.488
+   },
+   {
+    "subjectId": "sub-006",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20136.37173121564,
+    "adjusted": 18620.837418366275,
+    "x": 55.59
+   },
+   {
+    "subjectId": "sub-007",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 19681.09859657164,
+    "adjusted": 20662.60374206477,
+    "x": 51.317
+   },
+   {
+    "subjectId": "sub-008",
+    "group": null,
+    "sourceLabel": "SCI_nNP",
+    "value": 25398.033446814312,
+    "adjusted": 23549.92241164944,
+    "x": 48.552
+   },
+   {
+    "subjectId": "sub-009",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 17213.06858457637,
+    "adjusted": 18967.921204627874,
+    "x": 45.463
+   },
+   {
+    "subjectId": "sub-010",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23622.53773067993,
+    "adjusted": 20880.64688495192,
+    "x": 39.208
+   },
+   {
+    "subjectId": "sub-011",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 19860.073406054733,
+    "adjusted": 21085.783231069996,
+    "x": 64.995
+   },
+   {
+    "subjectId": "sub-012",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 24511.70588978009,
+    "adjusted": 21632.299981703258,
+    "x": 56.733
+   },
+   {
+    "subjectId": "sub-013",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22916.573806351702,
+    "adjusted": 22082.883640502092,
+    "x": 54.547
+   },
+   {
+    "subjectId": "sub-014",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23147.098166343927,
+    "adjusted": 22711.2684107603,
+    "x": 32.718
+   },
+   {
+    "subjectId": "sub-015",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23695.755610957465,
+    "adjusted": 23454.7127828397,
+    "x": 56.914
+   },
+   {
+    "subjectId": "sub-016",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 19947.426279812495,
+    "adjusted": 21137.64223823278,
+    "x": 52.015
+   },
+   {
+    "subjectId": "sub-017",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 18428.651586597956,
+    "adjusted": 19299.89565752449,
+    "x": 47.918
+   },
+   {
+    "subjectId": "sub-018",
+    "group": null,
+    "sourceLabel": "SCI_nNP",
+    "value": 21336.12680418299,
+    "adjusted": 21373.17808609069,
+    "x": 55.614
+   },
+   {
+    "subjectId": "sub-019",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 19948.70266030694,
+    "adjusted": 22882.372064655505,
+    "x": 40.241
+   },
+   {
+    "subjectId": "sub-020",
+    "group": null,
+    "sourceLabel": "SCI_nNP",
+    "value": 20698.96340029389,
+    "adjusted": 22830.148970289985,
+    "x": 52.192
+   },
+   {
+    "subjectId": "sub-021",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 21744.5310563079,
+    "adjusted": 21640.931166251798,
+    "x": 59.617
+   },
+   {
+    "subjectId": "sub-022",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21655.243113616118,
+    "adjusted": 21470.79515856455,
+    "x": 42.059
+   },
+   {
+    "subjectId": "sub-023",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 18161.050539649168,
+    "adjusted": 20119.949665908738,
+    "x": 30.018
+   },
+   {
+    "subjectId": "sub-024",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 17077.438465584033,
+    "adjusted": 19697.543270095008,
+    "x": 24.882
+   },
+   {
+    "subjectId": "sub-025",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 25285.426318127036,
+    "adjusted": 22631.245623650957,
+    "x": 65.705
+   },
+   {
+    "subjectId": "sub-026",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23828.993231921744,
+    "adjusted": 22063.29992783767,
+    "x": 50.021
+   },
+   {
+    "subjectId": "sub-027",
+    "group": null,
+    "sourceLabel": "SCI_nNP",
+    "value": 16699.032376290794,
+    "adjusted": 19913.837337697143,
+    "x": 53.601
+   },
+   {
+    "subjectId": "sub-028",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20241.021690134472,
+    "adjusted": 21278.87513026374,
+    "x": 54.399
+   },
+   {
+    "subjectId": "sub-029",
+    "group": null,
+    "sourceLabel": "SCI_nNP",
+    "value": 19884.852968003685,
+    "adjusted": 19829.61430388978,
+    "x": 44.888
+   },
+   {
+    "subjectId": "sub-030",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 22178.64516026165,
+    "adjusted": 23340.890520467026,
+    "x": 49.238
+   },
+   {
+    "subjectId": "sub-031",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21363.320442011947,
+    "adjusted": 21670.25487595131,
+    "x": 58.377
+   },
+   {
+    "subjectId": "sub-032",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23254.742080703665,
+    "adjusted": 22223.93438970268,
+    "x": 40.652
+   },
+   {
+    "subjectId": "sub-033",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21197.194560792825,
+    "adjusted": 21575.201465999162,
+    "x": 48.009
+   },
+   {
+    "subjectId": "sub-034",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 15597.302024531804,
+    "adjusted": 19168.637177844517,
+    "x": 69.048
+   },
+   {
+    "subjectId": "sub-035",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20719.21440247486,
+    "adjusted": 21638.072686285886,
+    "x": 44.781
+   },
+   {
+    "subjectId": "sub-036",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20265.160308033628,
+    "adjusted": 21591.401512937384,
+    "x": 39.605
+   },
+   {
+    "subjectId": "sub-037",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22661.047686086054,
+    "adjusted": 22627.84361458598,
+    "x": 52.344
+   },
+   {
+    "subjectId": "sub-038",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 22866.332952663557,
+    "adjusted": 22412.519454376794,
+    "x": 56.214
+   },
+   {
+    "subjectId": "sub-039",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21658.2190450334,
+    "adjusted": 19907.301332957217,
+    "x": 55.905
+   },
+   {
+    "subjectId": "sub-040",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 23731.501702194284,
+    "adjusted": 23835.143993887275,
+    "x": 67.129
+   },
+   {
+    "subjectId": "sub-041",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22001.54932981291,
+    "adjusted": 21882.379020910248,
+    "x": 57.217
+   },
+   {
+    "subjectId": "sub-042",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 24179.510953247434,
+    "adjusted": 22393.328868121378,
+    "x": 76.096
+   },
+   {
+    "subjectId": "sub-044",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23078.32724965028,
+    "adjusted": 21799.878635845245,
+    "x": 44.708
+   },
+   {
+    "subjectId": "sub-045",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22113.32878759833,
+    "adjusted": 21107.10661593387,
+    "x": 46.329
+   },
+   {
+    "subjectId": "sub-046",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20801.677833951977,
+    "adjusted": 21953.482056358618,
+    "x": 42.22
+   },
+   {
+    "subjectId": "sub-047",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 22700.66261090663,
+    "adjusted": 21635.334948821706,
+    "x": 68.96
+   },
+   {
+    "subjectId": "sub-048",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22055.91005464144,
+    "adjusted": 21945.53715198867,
+    "x": 51.196
+   },
+   {
+    "subjectId": "sub-049",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23840.245802277546,
+    "adjusted": 22527.239969239745,
+    "x": 61.304
+   },
+   {
+    "subjectId": "sub-050",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 19460.720516795354,
+    "adjusted": 19213.869045016345,
+    "x": 46.41
+   },
+   {
+    "subjectId": "sub-052",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21000.642079154182,
+    "adjusted": 20872.277911980396,
+    "x": 63.566
+   },
+   {
+    "subjectId": "sub-053",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 19161.471598124186,
+    "adjusted": 20999.09119319309,
+    "x": 51.824
+   },
+   {
+    "subjectId": "sub-054",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21062.13774706982,
+    "adjusted": 20045.611500345483,
+    "x": 56.062
+   },
+   {
+    "subjectId": "sub-055",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 20185.450419087254,
+    "adjusted": 18937.50648984332,
+    "x": 32.126
+   },
+   {
+    "subjectId": "sub-056",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 15938.090964151439,
+    "adjusted": 20605.34188734674,
+    "x": 52.342
+   },
+   {
+    "subjectId": "sub-057",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22573.710807285053,
+    "adjusted": 21388.255486162925,
+    "x": 65.992
+   },
+   {
+    "subjectId": "sub-058",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23264.122135021724,
+    "adjusted": 22176.87029197752,
+    "x": 51.972
+   },
+   {
+    "subjectId": "sub-059",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 17719.417141354494,
+    "adjusted": 21765.286004543657,
+    "x": 54.668
+   },
+   {
+    "subjectId": "sub-060",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 19698.441319669604,
+    "adjusted": 19419.23917372611,
+    "x": 38.957
+   },
+   {
+    "subjectId": "sub-061",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22528.271963136798,
+    "adjusted": 20848.348026671625,
+    "x": 55.955
+   },
+   {
+    "subjectId": "sub-062",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 24672.91666072663,
+    "adjusted": 22070.220808703678,
+    "x": 47.092
+   },
+   {
+    "subjectId": "sub-063",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21237.184480828386,
+    "adjusted": 20080.151131340688,
+    "x": 54.232
+   },
+   {
+    "subjectId": "sub-064",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 25961.004738055657,
+    "adjusted": 22632.318725872243,
+    "x": 72.072
+   },
+   {
+    "subjectId": "sub-065",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22501.042815091085,
+    "adjusted": 21927.937240000007,
+    "x": 54.805
+   },
+   {
+    "subjectId": "sub-066",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 17251.83207949335,
+    "adjusted": 19781.191682337594,
+    "x": 58.067
+   },
+   {
+    "subjectId": "sub-067",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23323.825940316958,
+    "adjusted": 22957.177524229523,
+    "x": 59.467
+   },
+   {
+    "subjectId": "sub-068",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 25388.964049579612,
+    "adjusted": 23208.64466006494,
+    "x": 53.699
+   },
+   {
+    "subjectId": "sub-069",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22979.70664069864,
+    "adjusted": 21637.967974817184,
+    "x": 43.355
+   },
+   {
+    "subjectId": "sub-070",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 21171.94923157343,
+    "adjusted": 20788.875841547168,
+    "x": 22.273
+   },
+   {
+    "subjectId": "sub-071",
+    "group": null,
+    "sourceLabel": "SCI_nNP",
+    "value": 19145.520677500008,
+    "adjusted": 19873.20476120916,
+    "x": 56.131
+   },
+   {
+    "subjectId": "sub-072",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 21367.02005456915,
+    "adjusted": 24385.774494410925,
+    "x": 49.431
+   },
+   {
+    "subjectId": "sub-073",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21923.888532576737,
+    "adjusted": 19501.805469315703,
+    "x": 42.517
+   },
+   {
+    "subjectId": "sub-074",
+    "group": null,
+    "sourceLabel": "SCI_nNP",
+    "value": 17581.367042719336,
+    "adjusted": 17225.752237214423,
+    "x": 50.252
+   },
+   {
+    "subjectId": "sub-075",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 20480.584392272023,
+    "adjusted": 19611.458836126814,
+    "x": 58.984
+   },
+   {
+    "subjectId": "sub-076",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22177.64646085441,
+    "adjusted": 23092.577219814513,
+    "x": 51.994
+   },
+   {
+    "subjectId": "sub-077",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 21234.439890053254,
+    "adjusted": 21192.276878682842,
+    "x": 45.167
+   },
+   {
+    "subjectId": "sub-078",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20345.89176758698,
+    "adjusted": 21345.214743744207,
+    "x": 51.455
+   },
+   {
+    "subjectId": "sub-079",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 19346.71846606202,
+    "adjusted": 22001.070282372057,
+    "x": 50.709
+   },
+   {
+    "subjectId": "sub-080",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 24452.73197229195,
+    "adjusted": 21793.14398497703,
+    "x": 54.404
+   },
+   {
+    "subjectId": "sub-081",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 21642.955554126365,
+    "adjusted": 19467.069106454255,
+    "x": 34.432
+   },
+   {
+    "subjectId": "sub-082",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 19914.946811744976,
+    "adjusted": 22800.346604473587,
+    "x": 45.936
+   },
+   {
+    "subjectId": "sub-083",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 22191.166298118987,
+    "adjusted": 23233.081886076867,
+    "x": 54.269
+   },
+   {
+    "subjectId": "sub-084",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23393.465096707972,
+    "adjusted": 21837.855471562,
+    "x": 44.126
+   },
+   {
+    "subjectId": "sub-085",
+    "group": null,
+    "sourceLabel": "SCI_P",
+    "value": 20439.39411633161,
+    "adjusted": 19025.53151592337,
+    "x": 59.855
+   },
+   {
+    "subjectId": "sub-086",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 20775.284435667574,
+    "adjusted": 21886.577690323353,
+    "x": 25.636
+   },
+   {
+    "subjectId": "sub-087",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23873.749709471074,
+    "adjusted": 24024.15656792981,
+    "x": 78.584
+   },
+   {
+    "subjectId": "sub-088",
+    "group": null,
+    "sourceLabel": "CTRL",
+    "value": 23822.3829142453,
+    "adjusted": 23151.470624604844,
+    "x": 40.981
+   }
+  ],
+  "fit": [
+   {
+    "group": null,
+    "x": [
+     22.273,
+     23.422204081632653,
+     24.571408163265307,
+     25.72061224489796,
+     26.86981632653061,
+     28.019020408163264,
+     29.168224489795918,
+     30.31742857142857,
+     31.466632653061225,
+     32.61583673469388,
+     33.76504081632653,
+     34.914244897959186,
+     36.06344897959184,
+     37.21265306122449,
+     38.36185714285715,
+     39.511061224489794,
+     40.660265306122454,
+     41.8094693877551,
+     42.95867346938776,
+     44.10787755102041,
+     45.25708163265307,
+     46.406285714285715,
+     47.55548979591837,
+     48.70469387755102,
+     49.853897959183676,
+     51.00310204081633,
+     52.152306122448984,
+     53.30151020408164,
+     54.450714285714284,
+     55.599918367346945,
+     56.74912244897959,
+     57.89832653061225,
+     59.0475306122449,
+     60.19673469387756,
+     61.345938775510206,
+     62.495142857142866,
+     63.64434693877551,
+     64.79355102040817,
+     65.94275510204082,
+     67.09195918367348,
+     68.24116326530613,
+     69.39036734693877,
+     70.53957142857143,
+     71.68877551020408,
+     72.83797959183674,
+     73.98718367346939,
+     75.13638775510205,
+     76.2855918367347,
+     77.43479591836736,
+     78.584
+    ],
+    "y": [
+     20682.84928520926,
+     20711.173624353425,
+     20739.49796349759,
+     20767.822302641755,
+     20796.14664178592,
+     20824.470980930084,
+     20852.795320074252,
+     20881.119659218417,
+     20909.44399836258,
+     20937.768337506746,
+     20966.09267665091,
+     20994.417015795076,
+     21022.74135493924,
+     21051.065694083405,
+     21079.390033227573,
+     21107.714372371738,
+     21136.038711515903,
+     21164.363050660068,
+     21192.687389804232,
+     21221.011728948397,
+     21249.33606809256,
+     21277.660407236726,
+     21305.98474638089,
+     21334.30908552506,
+     21362.633424669224,
+     21390.95776381339,
+     21419.282102957553,
+     21447.606442101718,
+     21475.930781245883,
+     21504.255120390048,
+     21532.579459534212,
+     21560.90379867838,
+     21589.228137822545,
+     21617.55247696671,
+     21645.876816110875,
+     21674.20115525504,
+     21702.525494399204,
+     21730.84983354337,
+     21759.174172687533,
+     21787.498511831698,
+     21815.822850975866,
+     21844.14719012003,
+     21872.471529264196,
+     21900.79586840836,
+     21929.120207552525,
+     21957.44454669669,
+     21985.768885840855,
+     22014.09322498502,
+     22042.417564129188,
+     22070.741903273352
+    ],
+    "low": [
+     19791.807925353813,
+     19851.408431108663,
+     19910.84905978631,
+     19970.111102210696,
+     20029.172946976927,
+     20088.009526861166,
+     20146.591642871845,
+     20204.88513656844,
+     20262.849874419568,
+     20320.43850008094,
+     20377.594901974357,
+     20434.252335556408,
+     20490.33113458367,
+     20545.735948218593,
+     20600.352459610356,
+     20654.04359153734,
+     20706.64530985111,
+     20757.962330965598,
+     20807.764368788798,
+     20855.784053639334,
+     20901.718299443975,
+     20945.23551810637,
+     20985.99125221111,
+     21023.653808291292,
+     21057.938656417555,
+     21088.645941531762,
+     21115.691408852672,
+     21139.12059677413,
+     21159.101080061762,
+     21175.89565592784,
+     21189.82568228888,
+     21201.234921383544,
+     21210.46094502774,
+     21217.816555456848,
+     21223.58028153172,
+     21227.993518773616,
+     21231.261786741103,
+     21233.558123355546,
+     21235.027300664104,
+     21235.790094778895,
+     21235.947220339072,
+     21235.582771072648,
+     21234.767136289607,
+     21233.559426753498,
+     21232.0094696565,
+     21230.159438728573,
+     21228.045182094567,
+     21225.697303045836,
+     21223.14204038505,
+     21220.401986859528
+    ],
+    "high": [
+     21573.89064506471,
+     21570.938817598188,
+     21568.14686720887,
+     21565.533503072813,
+     21563.12033659491,
+     21560.932434999002,
+     21558.99899727666,
+     21557.354181868395,
+     21556.038122305596,
+     21555.09817493255,
+     21554.590451327465,
+     21554.581696033743,
+     21555.15157529481,
+     21556.395439948217,
+     21558.42760684479,
+     21561.385153206138,
+     21565.432113180697,
+     21570.763770354537,
+     21577.610410819667,
+     21586.23940425746,
+     21596.953836741148,
+     21610.085296367084,
+     21625.97824055067,
+     21644.964362758827,
+     21667.328192920893,
+     21693.269586095015,
+     21722.872797062435,
+     21756.092287429306,
+     21792.760482430003,
+     21832.614584852254,
+     21875.333236779545,
+     21920.572675973217,
+     21967.995330617352,
+     22017.288398476572,
+     22068.17335069003,
+     22120.408791736463,
+     22173.789202057305,
+     22228.14154373119,
+     22283.321044710963,
+     22339.2069288845,
+     22395.69848161266,
+     22452.711609167414,
+     22510.175922238785,
+     22568.032310063223,
+     22626.23094544855,
+     22684.729654664807,
+     22743.492589587142,
+     22802.489146924203,
+     22861.693087873326,
+     22921.081819687177
+    ]
+   }
+  ],
+  "simpleSlopes": []
+ }
+}

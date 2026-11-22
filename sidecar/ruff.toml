@@ -1,0 +1,18 @@
+# Ruff configuration for the Supraspina sidecar.
+line-length = 88
+target-version = "py310"
+
+[lint]
+select = ["F", "E", "W", "I", "D", "UP", "B", "S", "PT", "ANN", "PL", "RUF", "PERF", "FURB"]
+ignore = [
+  "D203",   # one-blank-line-before-class (conflicts with D211)
+  "D213",   # multi-line-summary-second-line (conflicts with D212)
+  "ANN401", # Allow Any at the JSON-RPC or JSON-config boundary.
+]
+
+[lint.per-file-ignores]
+# Relax asserts, annotations, docstrings, magic values, and line length in tests.
+"tests/**" = ["S101", "ANN", "D", "PLR2004", "E501"]
+
+[lint.pydocstyle]
+convention = "numpy"

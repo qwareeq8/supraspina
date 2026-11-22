@@ -1,0 +1,111 @@
+{
+  "_comment": "Site labels shared by sidecar/tests/test_sites.py and src/shared/sites.test.ts. Each case either normalizes to label (null = unset) or is refused.",
+  "cases": [
+    {
+      "input": "Prisma",
+      "label": "Prisma"
+    },
+    {
+      "input": "Ingenia",
+      "label": "Ingenia"
+    },
+    {
+      "input": "  Prisma 3T \t",
+      "label": "Prisma 3T"
+    },
+    {
+      "input": "\nSite_2.0-b\r\n",
+      "label": "Site_2.0-b"
+    },
+    {
+      "input": "A",
+      "label": "A"
+    },
+    {
+      "input": "7",
+      "label": "7"
+    },
+    {
+      "input": "Prisma.",
+      "label": "Prisma."
+    },
+    {
+      "input": "Abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb9",
+      "label": "Abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb9"
+    },
+    {
+      "input": "",
+      "label": null
+    },
+    {
+      "input": "   \t",
+      "label": null
+    },
+    {
+      "input": null,
+      "label": null
+    },
+    {
+      "input": "Abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb9x",
+      "refused": true
+    },
+    {
+      "input": "-Prisma",
+      "refused": true
+    },
+    {
+      "input": ".Prisma",
+      "refused": true
+    },
+    {
+      "input": "_Prisma",
+      "refused": true
+    },
+    {
+      "input": "Prisma!",
+      "refused": true
+    },
+    {
+      "input": "Pris\nma",
+      "refused": true
+    },
+    {
+      "input": "Prisma/3T",
+      "refused": true
+    },
+    {
+      "input": "Prisma,3T",
+      "refused": true
+    },
+    {
+      "input": "Philips Ingenia\u00ae",
+      "refused": true
+    },
+    {
+      "input": "\u00a0Prisma",
+      "refused": true
+    },
+    {
+      "input": "\ufeffPrisma",
+      "refused": true
+    },
+    {
+      "input": "Pris\u00e9",
+      "refused": true
+    },
+    {
+      "input": 7,
+      "refused": true
+    },
+    {
+      "input": [
+        "Prisma"
+      ],
+      "refused": true
+    },
+    {
+      "input": true,
+      "refused": true
+    }
+  ]
+}

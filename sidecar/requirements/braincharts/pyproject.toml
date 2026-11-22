@@ -1,0 +1,26 @@
+# The BrainCharts runtime input that scripts/compile-braincharts-locks.sh
+# compiles into the hashed pip lock. pcntoolkit 0.35.0 is the release the
+# braincharts models at 5a1a782 name; the 1.x line cannot load them. The caps
+# keep the lock near that release (pandas below 3), and torch comes only from
+# the PyTorch CPU index so the runtime never pulls CUDA wheels.
+[project]
+name = "supraspina-braincharts-runtime"
+version = "0"
+requires-python = "==3.12.*"
+dependencies = [
+  "pcntoolkit==0.35.0",
+  "numpy>=2.0,<2.1",
+  "numba==0.60.0",
+  "nutpie>=0.13,<0.14",
+  "pymc>=5.18,<6",
+  "pandas<3",
+  "torch",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }

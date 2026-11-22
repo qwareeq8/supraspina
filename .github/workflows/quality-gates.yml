@@ -1,0 +1,181 @@
+# This workflow validates Supraspina release tags, which name a UTC date-time
+# version (v<YYYYMMDD>.<HHMM>.0), against the release identity contract, the
+# JavaScript and Python quality gates, the coverage floors, and the visual and
+# accessibility matrix.
+#
+# Version-tag pushes are the only trigger. Hosted CI does not build, package,
+# publish, or accept release artifacts. Packaging, installed acceptance, and
+# artifact verification remain local release gates.
+name: CI
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.0'
+
+# Never cancel validation for a release tag.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  SUPRASPINA_PYTHON_VERSION: '3.12.10'
+  # A rehearsal repository sets this variable to its own name; the real
+  # repository leaves it unset.
+  SUPRASPINA_RELEASE_REPOSITORY: ${{ vars.SUPRASPINA_RELEASE_REPOSITORY || 'qwareeq8/supraspina' }}
+  PIP_DISABLE_PIP_VERSION_CHECK: '1'
+
+jobs:
+  release:
+    name: Release tag and source contract
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out the exact tagged revision
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node 22
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Refuse the wrong source or tag identity
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="$(node -p "require('./package.json').version")"
+          readonly version
+          test "${GITHUB_REF_TYPE}" = "tag"
+          test "${GITHUB_REF_NAME}" = "v${version}"
+          test "$(git cat-file -t "refs/tags/${GITHUB_REF_NAME}")" = "tag"
+          test "$(git rev-parse "${GITHUB_REF_NAME}^{}")" = "${GITHUB_SHA}"
+          test "$(git rev-parse refs/remotes/origin/main)" = "${GITHUB_SHA}"
+          test "$(gh api "repos/${SUPRASPINA_RELEASE_REPOSITORY}/git/ref/heads/main" --jq .object.sha)" = "${GITHUB_SHA}"
+          test "$(gh api "repos/${SUPRASPINA_RELEASE_REPOSITORY}/git/ref/tags/${GITHUB_REF_NAME}" --jq .object.sha)" = "$(git rev-parse "refs/tags/${GITHUB_REF_NAME}")"
+
+      - name: Install locked desktop dependencies
+        run: npm ci
+
+      - name: Validate the complete release identity contract
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          npm run check:release:strict
+
+  verify:
+    name: Verify
+    needs: release
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out the exact tagged revision
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Node 22
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Set up exact quality Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
+        with:
+          python-version: ${{ env.SUPRASPINA_PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            sidecar/requirements/toolchain.txt
+            sidecar/requirements/release-linux-x86_64.txt
+            sidecar/requirements/quality-linux-x86_64.txt
+
+      - name: Install locked desktop dependencies
+        run: npm ci
+
+      - name: Install exact hashed Python inputs
+        run: |
+          python -m pip install --require-hashes --only-binary=:all: \
+            -r sidecar/requirements/toolchain.txt
+          python -m pip install --require-hashes --only-binary=:all: \
+            -r sidecar/requirements/release-linux-x86_64.txt \
+            -r sidecar/requirements/quality-linux-x86_64.txt
+          python -m pip install --no-deps --no-build-isolation -e ./sidecar
+          python -m pip check
+
+      - name: Verify release, dependency, and provenance contracts
+        run: |
+          npm run check:release
+          npm run check:prod-deps
+          npm run check:provenance
+          npm run check:python-locks
+          npm run check:screenshots
+
+      - name: Check formatting, types, and lint
+        run: |
+          npm run format:check
+          npm run typecheck
+          npm run lint
+
+      - name: Run script tests
+        run: npm run test:scripts
+
+      - name: Enforce whole-app JavaScript coverage
+        run: npm run test:cov
+
+      - name: Enforce critical renderer coverage
+        run: npm run test:cov:critical
+
+      - name: Install the pinned Chromium runtime
+        run: ./node_modules/.bin/playwright install --with-deps chromium
+
+      - name: Gate the visual and accessibility matrix
+        run: npm run visual:test
+
+      - name: Check Python formatting and lint
+        working-directory: sidecar
+        run: |
+          ruff format --check .
+          ruff check .
+
+      - name: Acquire the pinned upstream scientific assets
+        working-directory: sidecar
+        run: python -m supraspina_sidecar.scientific_assets --acquire
+
+      - name: Install R and Pandoc for the R resources
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends \
+            r-base-core r-cran-knitr r-cran-rmarkdown r-cran-writexl pandoc
+          # Ubuntu 24.04 does not package showtext or sysfonts, so install
+          # their binaries from a dated Posit Package Manager snapshot. The
+          # user agent makes the server send binaries instead of sources.
+          sudo Rscript -e '
+            options(HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(),
+              paste(getRversion(), R.version["platform"], R.version["arch"], R.version["os"])))
+            install.packages(c("sysfonts", "showtext"),
+              repos = "https://packagemanager.posit.co/cran/__linux__/noble/2026-11-16")'
+          Rscript -e 'for (p in c("knitr", "rmarkdown", "showtext", "sysfonts", "writexl")) stopifnot(requireNamespace(p, quietly = TRUE))'
+
+      - name: Run the Python suite with branch and critical-module coverage
+        working-directory: sidecar
+        run: |
+          pytest --cov=supraspina_sidecar --cov-branch \
+            --cov-report=term-missing --cov-report=json:coverage.json
+          python scripts/check_coverage.py coverage.json
+
+      - name: Check shell scripts and patch hygiene
+        run: |
+          shellcheck scripts/*.sh
+          git diff --check

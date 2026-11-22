@@ -1,0 +1,93 @@
+{
+  "spec": {
+    "schema": "supraspina/group-analysis-spec",
+    "schemaVersion": 2,
+    "design": {
+      "scope": "between",
+      "population": null,
+      "subset": []
+    },
+    "variables": {
+      "derived": []
+    },
+    "tests": [
+      {
+        "id": "t1",
+        "label": "SCI vs CTRL",
+        "kind": "two-group",
+        "factor": {
+          "grouping": {
+            "variable": {
+              "source": "registry",
+              "column": "sourceCohortLabel"
+            },
+            "groups": [
+              {
+                "label": "SCI",
+                "levels": [
+                  "SCI_nNP",
+                  "SCI_P"
+                ]
+              },
+              {
+                "label": "CTRL",
+                "levels": [
+                  "CTRL"
+                ]
+              }
+            ]
+          },
+          "focal": "SCI",
+          "reference": "CTRL",
+          "model": "all-groups"
+        },
+        "pairwise": "none",
+        "pairwiseFamily": "pooled",
+        "variable": null,
+        "moderator": null,
+        "adjustForGroup": false,
+        "inFamily": true,
+        "extraCovariates": []
+      }
+    ],
+    "stratify": null,
+    "measures": [
+      "aseg:Brain-Stem",
+      "dk:bi:precentral:ThickAvg",
+      "aseg:bi:Thalamus"
+    ],
+    "covariates": {
+      "age": {
+        "source": "registry",
+        "column": "age"
+      },
+      "sex": {
+        "source": "registry",
+        "column": "sex"
+      },
+      "headSize": {
+        "source": "etiv",
+        "rule": "extensive"
+      },
+      "extra": [],
+      "centering": "sample-mean"
+    },
+    "inclusion": {
+      "qc": "non-failed",
+      "registration": "set-missing",
+      "outliers": "keep",
+      "minCellN": 2
+    },
+    "inference": {
+      "sidedness": "two-sided",
+      "correction": "maxt-fwe",
+      "family": "all-tests",
+      "omnibusGate": false,
+      "alpha": 0.05,
+      "permutations": 5000,
+      "seed": 20260923
+    }
+  },
+  "specDigest": "a50af62f4dbb00958396ade8bc6fd065783672c1f9eabea0e23d5e861bdf50c8",
+  "upgradedFrom": "spec-v1-example.json"
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "verdicts": {
+    "sub-01": {
+      "verdict": "fail",
+      "note": "Retain this failure across every edit and restart.",
+      "tags": ["motion"],
+      "reviewEvidence": {
+        "evidenceVersion": 1,
+        "reviewer": "fixture-reviewer",
+        "reviewedAt": "2026-07-23T11:59:00.000Z",
+        "galleries": [
+          {
+            "tab": "subcortical",
+            "label": "Subcortical QC gallery",
+            "displayPath": "outputs/qc/subcortical.html",
+            "runId": "run-1234abcd",
+            "receiptSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "openedAt": "2026-07-23T11:58:00.000Z"
+          },
+          {
+            "tab": "internal",
+            "label": "Cortical-internal QC gallery",
+            "displayPath": "outputs/qc/internal.html",
+            "runId": "run-1234abcd",
+            "receiptSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "openedAt": "2026-07-23T11:58:10.000Z"
+          },
+          {
+            "tab": "external",
+            "label": "Cortical-external QC gallery",
+            "displayPath": "outputs/qc/external.html",
+            "runId": "run-1234abcd",
+            "receiptSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "openedAt": "2026-07-23T11:58:20.000Z"
+          }
+        ]
+      },
+      "revision": 4,
+      "updatedAt": "2026-07-23T12:00:00.000Z"
+    },
+    "sub-02": {
+      "verdict": null,
+      "note": "",
+      "tags": [],
+      "reviewEvidence": null,
+      "revision": 1,
+      "updatedAt": "2026-07-23T12:01:00.000Z"
+    }
+  }
+}

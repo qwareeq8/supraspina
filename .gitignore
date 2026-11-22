@@ -1,0 +1,67 @@
+# Dependencies.
+node_modules/
+
+# Build output.
+/build/
+out/
+dist/
+release/
+release-assets/
+*.tsbuildinfo
+
+# Generated local screenshot evidence from npm run screenshots.
+/screenshots/
+/visual-evidence/
+# Interrupted documentation screenshot staging directories.
+docs/screenshots/.capture-*/
+# Captured GUI acceptance evidence, which stays out of the product tree.
+/test-evidence/
+
+# Python bytecode caches that bundled resource scripts compile when run.
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Python sidecar build artifacts.
+sidecar/build/
+sidecar/dist/
+sidecar/*.spec
+# The reviewed PyInstaller specification stays tracked.
+!sidecar/supraspina-sidecar.spec
+sidecar/.venv/
+sidecar/.pytest_cache/
+sidecar/.ruff_cache/
+
+# The frozen sidecar binary and the verified Linux micromamba packaging input
+# are never committed.
+resources/sidecar/
+resources/micromamba/
+
+# Provisioned runtime data is never committed; it is acquired or created only
+# after explicit operator authorization.
+runtime/
+*.pkl
+ExtraTreesModel
+PyBrainAge.zip
+
+# Coverage data and logs.
+coverage/
+.coverage
+/sidecar/coverage.json
+*.log
+
+# Secrets and local environment files are never committed. Supraspina does not
+# auto-load a repository .env file.
+.env
+.env.*
+*.pem
+*.key
+
+# Editor and operating-system files.
+.DS_Store
+.vscode/
+.idea/
+
+# Private notes.
+notes/

@@ -1,0 +1,236 @@
+{
+  "spec": {
+    "schema": "supraspina/group-analysis-spec",
+    "schemaVersion": 2,
+    "design": {
+      "scope": "within",
+      "population": {
+        "grouping": {
+          "variable": {
+            "source": "registry",
+            "column": "sourceCohortLabel"
+          },
+          "groups": [
+            {
+              "label": "SCI",
+              "levels": [
+                "SCI_P",
+                "SCI_nNP"
+              ]
+            },
+            {
+              "label": "CTRL",
+              "levels": [
+                "CTRL"
+              ]
+            }
+          ]
+        },
+        "groups": [
+          "SCI"
+        ]
+      },
+      "subset": []
+    },
+    "variables": {
+      "derived": [
+        {
+          "id": "dv-motor",
+          "label": "ISNCSCI motor score",
+          "op": "sum",
+          "inputs": [
+            {
+              "source": "imported",
+              "table": "var-0123456789abcdef",
+              "column": "UEMS"
+            },
+            {
+              "source": "imported",
+              "table": "var-0123456789abcdef",
+              "column": "LEMS"
+            }
+          ],
+          "params": {
+            "cuts": [],
+            "labels": []
+          }
+        }
+      ]
+    },
+    "tests": [
+      {
+        "id": "tsi",
+        "label": "Time since injury",
+        "kind": "association",
+        "factor": null,
+        "pairwise": "none",
+        "pairwiseFamily": "pooled",
+        "variable": {
+          "ref": {
+            "source": "clinical-csv",
+            "column": "Time since SCI (years)"
+          },
+          "transform": "none"
+        },
+        "moderator": null,
+        "adjustForGroup": false,
+        "inFamily": false,
+        "extraCovariates": []
+      },
+      {
+        "id": "log-tsi",
+        "label": "Time since injury, log(1 + x)",
+        "kind": "association",
+        "factor": null,
+        "pairwise": "none",
+        "pairwiseFamily": "pooled",
+        "variable": {
+          "ref": {
+            "source": "clinical-csv",
+            "column": "Time since SCI (years)"
+          },
+          "transform": "log1p"
+        },
+        "moderator": null,
+        "adjustForGroup": false,
+        "inFamily": true,
+        "extraCovariates": []
+      },
+      {
+        "id": "ais",
+        "label": "AIS A vs B-D",
+        "kind": "two-group",
+        "factor": {
+          "grouping": {
+            "variable": {
+              "source": "clinical-csv",
+              "column": "AIS"
+            },
+            "groups": [
+              {
+                "label": "AIS A",
+                "levels": [
+                  "A"
+                ]
+              },
+              {
+                "label": "AIS B-D",
+                "levels": [
+                  "B",
+                  "C",
+                  "D"
+                ]
+              }
+            ]
+          },
+          "focal": "AIS A",
+          "reference": "AIS B-D",
+          "model": "all-groups"
+        },
+        "pairwise": "none",
+        "pairwiseFamily": "pooled",
+        "variable": null,
+        "moderator": null,
+        "adjustForGroup": false,
+        "inFamily": true,
+        "extraCovariates": []
+      },
+      {
+        "id": "level",
+        "label": "Cervical vs thoracic-lumbar",
+        "kind": "two-group",
+        "factor": {
+          "grouping": {
+            "variable": {
+              "source": "imported",
+              "table": "var-0123456789abcdef",
+              "column": "injury_level"
+            },
+            "groups": [
+              {
+                "label": "Cervical",
+                "levels": [
+                  "cervical"
+                ]
+              },
+              {
+                "label": "Thoracic-lumbar",
+                "levels": [
+                  "thoracic-lumbar"
+                ]
+              }
+            ]
+          },
+          "focal": "Cervical",
+          "reference": "Thoracic-lumbar",
+          "model": "all-groups"
+        },
+        "pairwise": "none",
+        "pairwiseFamily": "pooled",
+        "variable": null,
+        "moderator": null,
+        "adjustForGroup": false,
+        "inFamily": true,
+        "extraCovariates": []
+      },
+      {
+        "id": "motor",
+        "label": "ISNCSCI motor score",
+        "kind": "association",
+        "factor": null,
+        "pairwise": "none",
+        "pairwiseFamily": "pooled",
+        "variable": {
+          "ref": {
+            "source": "derived",
+            "column": "dv-motor"
+          },
+          "transform": "standardize"
+        },
+        "moderator": null,
+        "adjustForGroup": false,
+        "inFamily": true,
+        "extraCovariates": []
+      }
+    ],
+    "stratify": null,
+    "measures": [
+      "vol:brainstem-ss:mid:Medulla",
+      "aseg:Brain-Stem",
+      "aseg:bi:Thalamus",
+      "dk:rh:postcentral:GrayVol"
+    ],
+    "covariates": {
+      "age": {
+        "source": "registry",
+        "column": "age"
+      },
+      "sex": {
+        "source": "registry",
+        "column": "sex"
+      },
+      "headSize": {
+        "source": "etiv",
+        "rule": "all"
+      },
+      "extra": [],
+      "centering": "sample-mean"
+    },
+    "inclusion": {
+      "qc": "non-failed",
+      "registration": "set-missing",
+      "outliers": "keep",
+      "minCellN": 3
+    },
+    "inference": {
+      "sidedness": "two-sided",
+      "correction": "bh-fdr",
+      "family": "all-tests",
+      "omnibusGate": false,
+      "alpha": 0.05,
+      "permutations": 0,
+      "seed": 20260923
+    }
+  },
+  "specDigest": "39974052e47835802ce9240deb8c62329bd55dee231289376ffc489f58c20e7a"
+}

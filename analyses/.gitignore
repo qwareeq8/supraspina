@@ -1,0 +1,28 @@
+# The private configuration names participant data and QC decisions; only the example is tracked.
+config.yaml
+*.private.yaml
+
+# Participant-level data and run outputs never enter the repository, even when work_dir or
+# output_dir is pointed inside it.
+work/
+outputs/
+private/
+*.nii
+*.nii.gz
+*.mgz
+*.mat
+*.npz
+*.npy
+*.csv
+*.tsv
+*.png
+*.pdf
+*.tif
+*.svg
+logs/
+
+# Atlas downloads.
+atlases/
+
+# Label specifications are text and stay tracked.
+!atlas_nuclei_tracts/*.json

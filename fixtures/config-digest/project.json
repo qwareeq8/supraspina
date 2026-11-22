@@ -1,0 +1,169 @@
+{
+  "description": "A project configuration in the current schema. The sidecar inventory digest and the main process session digest must both equal sha256.",
+  "config": {
+    "project": {
+      "name": "Configuration digest fixture",
+      "createdAt": "2026-01-15T00:00:00.000Z"
+    },
+    "platform": {
+      "mode": "linux",
+      "pathStyle": "posix"
+    },
+    "paths": {
+      "projectRoot": "/data/study",
+      "rawdataDir": "${projectRoot}/rawdata",
+      "derivativesDir": "${projectRoot}/derivatives",
+      "outputDir": "${projectRoot}/outputs/run",
+      "metadataDir": "${projectRoot}/metadata",
+      "clinicalMetadataFile": "${metadataDir}/clinical.csv",
+      "ageMetadataFile": "${metadataDir}/age.csv",
+      "qcOutputDir": "${outputDir}/qc_review"
+    },
+    "tools": {
+      "freesurferHome": "",
+      "freesurferLicense": "",
+      "pythonExecutable": "",
+      "rscriptExecutable": ""
+    },
+    "patterns": {
+      "subjectGlob": "sub-*",
+      "t1Pattern": "*_T1w.nii.gz"
+    },
+    "runtime": {
+      "threads": 6,
+      "queueSize": 2,
+      "memoryWarningGB": 10,
+      "dryRun": true,
+      "resumeCompleted": true,
+      "rerunIncomplete": false,
+      "stopOnError": false,
+      "continueIndependentAfterError": true
+    },
+    "subjects": {
+      "include": [],
+      "exclude": []
+    },
+    "steps": {
+      "brainfov": {
+        "enabled": true,
+        "params": {
+          "marginMm": 30
+        }
+      },
+      "deface": {
+        "enabled": false,
+        "params": {
+          "tool": "mri_deface",
+          "forceOverwrite": false
+        }
+      },
+      "recon": {
+        "enabled": true,
+        "params": {
+          "backend": "freesurfer",
+          "fastsurferDevice": "auto",
+          "directives": "-all",
+          "parallel": true
+        }
+      },
+      "enigma": {
+        "enabled": true,
+        "params": {
+          "backend": "auto",
+          "matlabExecutable": "",
+          "mcrRoot": "",
+          "enigmaScriptDir": "",
+          "outDir": "${paths.qcOutputDir}",
+          "fsVersion": "7"
+        }
+      },
+      "outliers": {
+        "enabled": true,
+        "params": {
+          "zThreshold": 2.698
+        }
+      },
+      "features": {
+        "enabled": true,
+        "params": {
+          "parcellation": "aparc.a2009s",
+          "measure": "thickness",
+          "outDir": "${paths.outputDir}/features",
+          "validateFeatureOrder": true
+        }
+      },
+      "age": {
+        "enabled": true,
+        "params": {
+          "subjectIdColumn": "participant_id",
+          "ageColumn": "age",
+          "join": "left",
+          "warnOnMissing": true
+        }
+      },
+      "pybrainage": {
+        "enabled": true,
+        "params": {
+          "pythonExecutable": "",
+          "modelPath": "${pybrain.modelPath}",
+          "scalerPath": "${pybrain.scalerPath}",
+          "rowFallback": true
+        }
+      },
+      "clinical": {
+        "enabled": true,
+        "params": {
+          "joinKey": "participant_id",
+          "requiredColumns": "Cohort,AIS"
+        }
+      },
+      "brainpad": {
+        "enabled": true,
+        "params": {
+          "outDir": "${paths.outputDir}/analysis"
+        }
+      },
+      "aggregate": {
+        "enabled": true,
+        "params": {
+          "subjectGlob": "sub-*",
+          "outDir": "${paths.outputDir}/structural"
+        }
+      },
+      "final": {
+        "enabled": true,
+        "params": {
+          "rscriptExecutable": "${tools.rscriptExecutable}",
+          "outDir": "${paths.outputDir}/final",
+          "renderReport": true
+        }
+      },
+      "braincharts": {
+        "enabled": false,
+        "params": {
+          "seed": 117
+        }
+      },
+      "zstats": {
+        "enabled": false,
+        "params": {
+          "renderReport": true
+        }
+      }
+    },
+    "pybrain": {
+      "modelPath": "",
+      "scalerPath": ""
+    },
+    "outputs": {
+      "rootDir": "${paths.outputDir}",
+      "runDir": "${rootDir}",
+      "manifestPath": "${rootDir}/manifest.json"
+    },
+    "provenance": {
+      "configSha256": "",
+      "runId": ""
+    }
+  },
+  "sha256": "eab40a81845dd830de1ffac20c688cea89f1076e086db54adb892c952fc68f83"
+}

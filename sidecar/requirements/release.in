@@ -1,0 +1,5 @@
+# Freeze the sidecar runtime and dependency closure. Compile separately per target.
+numpy==2.5.3
+openpyxl==3.1.5
+pydantic==2.13.4
+pyinstaller==6.21.0

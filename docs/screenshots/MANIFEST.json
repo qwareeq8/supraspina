@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 3,
+  "fixture": {
+    "id": "supraspina-synthetic-documentation-v2",
+    "source": "scripts/shot.cjs",
+    "dataClass": "deterministic-synthetic",
+    "projectName": "Synthetic documentation study",
+    "seed": 17,
+    "clock": "2026-07-22T16:00:00.000Z",
+    "theme": "dark",
+    "density": "Cozy",
+    "subjectCount": 12,
+    "subjectStateCoverage": ["done", "running", "failed", "pending"],
+    "runStateCoverage": ["done", "running", "failed", "blocked"],
+    "jobStateCoverage": ["done", "running", "queued", "failed", "blocked"],
+    "logLevelCoverage": ["INFO", "WARN", "ERROR"],
+    "qcVerdictCoverage": ["pass", "fail", "defer", "unreviewed"],
+    "resultStateCoverage": [
+      "produced",
+      "partial",
+      "expected",
+      "absent",
+      "unknown"
+    ],
+    "diagnosticStateCoverage": [
+      "found",
+      "warning",
+      "wrong version",
+      "missing",
+      "not checked"
+    ],
+    "redactedDisplayFields": [
+      "age and sex",
+      "cohort",
+      "AIS",
+      "dates and times",
+      "reviewer note"
+    ],
+    "qcPanelPlaceholder": "Synthetic QC panel",
+    "qcAnatomyIncluded": false,
+    "realParticipantDataIncluded": false
+  },
+  "reproduction": {
+    "command": "npm run build && npm run screenshots:documentation",
+    "build": "npm run build",
+    "outputDirectory": "docs/screenshots",
+    "sourceIdentity": {
+      "algorithm": "sha256-path-length-content-v1",
+      "fileCount": 268,
+      "sha256": "12b71e5ff21f84d3544833f2d46f27d60db70a76c8e64a7d2ad4ef11e2c0162f"
+    },
+    "runtimeIdentity": {
+      "engine": "playwright-chromium",
+      "platform": "linux-x86_64",
+      "playwright": "1.61.1",
+      "chromiumRevision": "1228",
+      "chromiumVersion": "149.0.7827.55"
+    },
+    "viewport": { "cssWidth": 1600, "cssHeight": 1000, "deviceScaleFactor": 2 }
+  },
+  "images": {
+    "dashboard.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Dashboard",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "8ed0f103d2450c0c40a1d26bbf3bae87ac23cd6879afbaa6e4ea1aae6273d24b"
+    },
+    "subjects.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Subjects",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "a36e2fa8914a8485b87599a3ad1b1670cae3af994ee7ebc46294b4bb88e6c698"
+    },
+    "runs.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Runs",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "3b45fe6ab38c84916106d5d7517ddc7d486f1e948f8842436674e009e83d2dd6"
+    },
+    "logs.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Logs",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "4bf1550a1586306869083986f0322e21b84c205ecdf82327a9aff429b3bfb661"
+    },
+    "qc-review.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "QC review",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "c0d9e85862e66e7ea150c54978203b44c940bdf4da283b44d141f4946e021d5e"
+    },
+    "results.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Results",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "e03bd1654043dbf4f1c43bfc5fba6ac50fd627d7505ce983d90e7e2969de4775"
+    },
+    "analysis.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Analysis",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "2259d2241f8fcf89f18dfdd33523f650fff4e8f8d6f7845407eb5f1a7f09236e"
+    },
+    "analysis-grid.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Analysis",
+      "state": "analysis-grid",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "ebe646b7b92dff27ac90da3c34b883e8540a502e423ddaadea1be9339fad885b"
+    },
+    "diagnostics.png": {
+      "source": "deterministic-synthetic-application",
+      "route": "Diagnostics",
+      "state": "populated",
+      "command": "npm run build && npm run screenshots:documentation",
+      "width": 3200,
+      "height": 2000,
+      "sha256": "6dedb9d4cd5fc84d11ed91f0c742f2430903657d67ecf53fef92f88edd308b16"
+    }
+  }
+}

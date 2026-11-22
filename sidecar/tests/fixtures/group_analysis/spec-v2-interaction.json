@@ -1,0 +1,111 @@
+{
+  "spec": {
+    "schema": "supraspina/group-analysis-spec",
+    "schemaVersion": 2,
+    "design": {
+      "scope": "between",
+      "population": null,
+      "subset": [
+        {
+          "variable": {
+            "source": "registry",
+            "column": "age"
+          },
+          "keep": {
+            "min": 18,
+            "max": 80.5
+          }
+        }
+      ]
+    },
+    "variables": {
+      "derived": []
+    },
+    "tests": [
+      {
+        "id": "age-slope",
+        "label": "Age slope, SCI vs CTRL",
+        "kind": "interaction",
+        "factor": {
+          "grouping": {
+            "variable": {
+              "source": "registry",
+              "column": "sourceCohortLabel"
+            },
+            "groups": [
+              {
+                "label": "SCI",
+                "levels": [
+                  "SCI_P",
+                  "SCI_nNP"
+                ]
+              },
+              {
+                "label": "CTRL",
+                "levels": [
+                  "CTRL"
+                ]
+              }
+            ]
+          },
+          "focal": null,
+          "reference": "CTRL",
+          "model": "all-groups"
+        },
+        "pairwise": "none",
+        "pairwiseFamily": "pooled",
+        "variable": null,
+        "moderator": {
+          "ref": {
+            "source": "registry",
+            "column": "age"
+          },
+          "transform": "none"
+        },
+        "adjustForGroup": false,
+        "inFamily": true,
+        "extraCovariates": [
+          {
+            "source": "measure",
+            "column": "global:SurfaceHoles"
+          }
+        ]
+      }
+    ],
+    "stratify": null,
+    "measures": [
+      "parc:a2009s:lh:G_precentral:ThickAvg",
+      "parc:a2009s:bi:G_postcentral:ThickAvg",
+      "global:TotalGrayVol"
+    ],
+    "covariates": {
+      "age": null,
+      "sex": {
+        "source": "registry",
+        "column": "sex"
+      },
+      "headSize": {
+        "source": "etiv",
+        "rule": "extensive"
+      },
+      "extra": [],
+      "centering": "sample-mean"
+    },
+    "inclusion": {
+      "qc": "non-failed",
+      "registration": "set-missing",
+      "outliers": "keep",
+      "minCellN": 3
+    },
+    "inference": {
+      "sidedness": "two-sided",
+      "correction": "holm",
+      "family": "per-test",
+      "omnibusGate": false,
+      "alpha": 0.05,
+      "permutations": 0,
+      "seed": 20260923
+    }
+  },
+  "specDigest": "b0e49a140cac5b7c71c47eaad2e947205678d2684394b84917935fb6bcaf607d"
+}

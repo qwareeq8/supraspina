@@ -1,0 +1,1 @@
+cliffs-delta==1.0.0 --hash=sha256:2ec087e8254861204aab79e222b2e863a79f3d6f35d69e14f8b188fb6c5b048f

@@ -1,0 +1,147 @@
+---
+title: "Supraspina step 9: Structural analysis"
+output: html_document
+params:
+  track: "raw"
+  structural_dir: ""
+  metadata_csv: ""
+  zscores_csv: ""
+  out_dir: ""
+  start_column: 5
+  cortical_split: 613
+  cohorts: ["SCI_H", "SCI_P", "SCI_nNP", "SCI"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+# Reuse the analysis library shipped alongside this report. Load only its
+# functions because sys.nframe() guards its command-line entry point.
+analysis_lib <- file.path(
+  dirname(knitr::current_input(dir = TRUE)),
+  "FreesurferAnalysisScript.R"
+)
+source(analysis_lib)
+zscore_track <- identical(params$track, "zscores")
+```
+
+## Overview
+
+```{r overview, results="asis"}
+if (zscore_track) {
+  cat(paste(
+    "This report compares BrainCharts normative z-scores between cohorts with",
+    "per-region Welch t-tests and Hedges g across four contrasts: pain vs",
+    "control, no-pain vs control, pain vs no-pain, and pooled SCI vs control.",
+    "It analyzes the cortical thickness (Z_SCI) and subcortical volume (Z_SUB)",
+    "z-score blocks and requires one table for each block and contrast, for",
+    "eight tables total."
+  ))
+} else {
+  cat(paste(
+    "This report runs per-region Welch t-test and Hedges g comparisons across",
+    "four cohort contrasts: pain vs control, no-pain vs control, pain vs",
+    "no-pain, and pooled SCI vs control. It analyzes the cortical (SCI),",
+    "subcortical (SUB), and white matter (WM) measure blocks and requires one",
+    "table for each block and contrast, for twelve tables total. It also",
+    "summarizes intracranial volume and mean cortical thickness by cohort and",
+    "site. Raw volumes are not adjusted for head size."
+  ))
+}
+```
+
+If a block or contrast cannot estimate any region, the report stops with the
+missing result-family name and its reason. The tables report unadjusted
+per-region inference. The implementation applies no multiplicity correction or
+covariate adjustment and omits missing regional values per comparison. Each
+result family requires at least one region with two observations per group.
+Treat these outputs as study-specific research results that require
+statistical review; they do not provide individual or clinical interpretation.
+The sourced analysis rejects any input CSV above 64 MiB, 5,000 cohort rows, or
+1,024 columns before reading the full table. It also rejects invalid
+nonmissing regional values instead of silently dropping them. The command-line
+wrapper renders into an unpublished destination-filesystem generation and
+switches the public output path only after every table and this report
+succeed.
+
+```{r run-analysis}
+analysis <- if (zscore_track) {
+  run_zscore_analysis_in_place(
+    zscores_csv = params$zscores_csv,
+    out_dir = params$out_dir,
+    cohorts = params$cohorts
+  )
+} else {
+  run_analysis_in_place(
+    structural_dir = params$structural_dir,
+    metadata_csv = params$metadata_csv,
+    out_dir = params$out_dir,
+    start_column = params$start_column,
+    cortical_split = params$cortical_split,
+    cohorts = params$cohorts
+  )
+}
+```
+
+## Effect direction
+
+```{r direction, results="asis"}
+cat(paste(direction_text(params$cohorts), collapse = "\n\n"))
+```
+
+## Sites
+
+```{r sites, results="asis"}
+if (zscore_track) {
+  cat(zscore_site_text(analysis))
+} else {
+  cat(paste(site_text(analysis), collapse = "\n\n"))
+  if (length(analysis$site_labels) >= 2) {
+    counts <- analysis$site_counts
+    wide <- reshape(
+      counts, idvar = "Site", timevar = "Cohort", direction = "wide"
+    )
+    names(wide) <- sub("^N\\.", "", names(wide))
+    cat("\n\n")
+    print(knitr::kable(wide, row.names = FALSE))
+  }
+}
+```
+
+## Result tables
+
+```{r results-summary, results="asis"}
+result_bases <- if (zscore_track) {
+  as.vector(outer(
+    paste0("Z_", c("SCI", "SUB")),
+    c("PvH", "nNPvH", "nNPvP", "IvH"),
+    function(block, comparison) paste0(block, "_", comparison, "_results")
+  ))
+} else {
+  as.vector(outer(
+    c("SCI", "SUB", "WM"),
+    c("PvH", "nNPvH", "nNPvP", "IvH"),
+    function(block, comparison) paste0(block, "_", comparison, "_results")
+  ))
+}
+result_candidates <- unlist(lapply(
+  result_bases,
+  function(base) file.path(params$out_dir, paste0(base, c(".xlsx", ".csv")))
+))
+if (!zscore_track) {
+  result_candidates <- c(
+    result_candidates,
+    file.path(
+      params$out_dir,
+      c("site_exclusions.csv", "summary_icv.csv", "summary_thickness.csv")
+    )
+  )
+}
+results_files <- basename(
+  result_candidates[file.exists(result_candidates)]
+)
+if (length(results_files) == 0) {
+  cat("Check the cohort labels and inputs to produce result tables.\n")
+} else {
+  cat(paste0("- `", results_files, "`", collapse = "\n"))
+}
+```

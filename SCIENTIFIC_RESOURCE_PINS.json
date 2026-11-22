@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "apptainerVersion": "1.5.3",
+  "resources": {
+    "fastsurfer": {
+      "version": "2.5.4",
+      "variants": {
+        "cpu": {
+          "platform": "linux/amd64",
+          "reviewedTag": "cpu-v2.5.4",
+          "ociManifestDigest": "sha256:de0e93135b54d636316e3f9601b702662794e003365cec07a58b0f613888a5fa",
+          "sifBytes": 1839824896,
+          "sifSha256": "cf2a31fb46477b3b51d854a4ecfcc88cad27a246bc887de459620dcb0de038af"
+        },
+        "cuda": {
+          "platform": "linux/amd64",
+          "reviewedTag": "cuda-v2.5.4",
+          "ociManifestDigest": "sha256:283d5db0972743aef92a093705a26f0c9d7a2512d782f0f97dd859357a4588a0",
+          "sifBytes": 5520121856,
+          "sifSha256": "4ec60d2ecc0dec6f826f6cf693a057bd8fc80b2ac159309ad2ca2fa73f7ef1fc"
+        }
+      }
+    },
+    "synthstrip": {
+      "version": "1.8",
+      "variants": {
+        "cpu": {
+          "platform": "linux/amd64",
+          "reviewedTag": "1.8",
+          "ociManifestDigest": "sha256:ebbc177221194371f16362513ace68312a22922bb581bdfa618ac7ff9c1d2c06",
+          "sifBytes": 382562304,
+          "sifSha256": "f7faaccded4806780dc27172cd09bdaeffb48164c40edb3996fbec6a4829bfca"
+        }
+      }
+    }
+  }
+}

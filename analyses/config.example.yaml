@@ -1,0 +1,119 @@
+# Private configuration for the dorsal medulla analyses.
+#
+# Copy this file to analyses/config.yaml (git-ignored), or anywhere outside the repository and
+# point the ANALYSES_CONFIG environment variable at it, then replace every placeholder. Paths may
+# use ~ and environment variables. Participant lists, QC decisions, and clinical data live only in
+# the private files named here; nothing under work_dir may be published.
+
+# One row per analyzed participant. Required columns: participant_id, sci (1 SCI,
+# 0 control), age (years), female (1 or 0), eTIV (FreeSurfer estimated total intracranial volume,
+# mm3). Within-SCI columns (blank for controls): cervical (1 cervical, 0 thoracic or lumbar), ais_a
+# (1 AIS A, 0 AIS B to D), years_since_injury (injury date to MRI date, years of 365.25 days), nprs
+# (0 to 10), lt_total, pp_total, motor_total (ISNCSCI light-touch, pinprick, and motor totals),
+# sensitivity_exclude (1 for participants left out of the sensitivity analyses). Template columns:
+# dbm_template (1 for the participants of the DBM templates).
+participants: /private/participants.csv
+
+# Optional renames, {name used by the code: name in the participants file}, so an existing table
+# can be read without copying it.
+participant_columns: {}
+
+# Participant-level derived data (images, registrations, per-participant tables). Private.
+work_dir: /private/work
+
+# Group-level tables and figures.
+output_dir: /private/outputs
+
+freesurfer:
+  home: /usr/local/freesurfer/8.2.0
+  # recon-all outputs, one folder per participant_id (Supraspina's reconstruction stage). Read only.
+  subjects_dir: /private/freesurfer
+  # Brainstem subfield labels, <dir>/<participant_id>/brainstemSsLabels.FSvoxelSpace.mgz; subfields/segment.sh
+  # writes them to <work_dir>/subfields/subregions.
+  brainstem_subfields_dir: /private/work/subfields/subregions
+
+# T1-weighted images, <t1_dir>/<participant_id>.nii.gz: the Brain FOV crop, or the source T1 where Brain FOV kept it.
+t1_dir: /private/t1
+# SynthStrip brain masks of the same scans, <t1_mask_dir>/<participant_id>.nii.gz; DARTEL uses them only to place the origin.
+t1_mask_dir: /private/t1_mask
+
+dartel:
+  # Optional list of the scans the DARTEL template is built from (one participant_id per line). The paper's
+  # template came from the scans segmented first, and later participants were warped to it. Unset: all
+  # analyzed participants.
+  # template_participants: /private/qc/dartel_template_participants.txt
+
+dbm_brainstem:
+  # participant_id whose padded brainstem crop sets the template grid and initial pose (a template participant).
+  reference_participant: ""
+
+dbm_wholebrain:
+  # participant_id of the rigid pose reference for template iteration 0 (a template participant).
+  template_reference: ""
+
+qc:
+  # participant_id (or blind montage code) and rating (Pass, Doubtful, or Fail) of the thalamic segmentation
+  # montages.
+  thalamus_ratings: /private/qc/thalamus_ratings.tsv
+  # Group-blind review of flagged cortical registrations: participant_id, hemi, decision (keep, out, or
+  # exclude_bn), bn_regions (parcel keys separated by ";", such as M1_lowerlimb;S1_lowerlimb), and
+  # registration (b40infl, b40, or default: the surface registration kept for that hemisphere).
+  cortical_adjudication: /private/qc/cortical_adjudication.tsv
+  # Single Desikan-Killiany cells set missing at review: participant_id, hemisphere, structure, and optionally
+  # registration (original, b40infl, or any).
+  region_exclusions: /private/qc/region_exclusions.tsv
+  # Participants whose brainstem DBM registration failed visual review (empty in the paper).
+  dbm_registration_exclusions: /private/qc/dbm_registration_exclusions.txt
+  # The same for the whole-brain DBM registrations (empty in the paper).
+  dbm_wholebrain_registration_exclusions: /private/qc/dbm_wholebrain_registration_exclusions.txt
+  # Participants whose buckner40 fits set the robust z of the automated cortical registration screen
+  # (a fixed reference set; list the same set to reproduce the screen exactly). Empty: the analyzed sample.
+  cortical_screen_reference: /private/qc/cortical_screen_reference.txt
+
+software:
+  ants_bin: /opt/ants-2.6.5/bin
+  fsl_dir: /usr/local/fsl
+  spm_dir: /opt/spm25
+  matlab: matlab
+  # FastSurfer 2.5.4 Apptainer image for CerebNet. The paper ran the CUDA image on a GPU.
+  fastsurfer_sif: /opt/containers/fastsurfer-cuda-v2.5.4.sif
+  # Folder with FreeSurfer 8.2.0's samseg package and its Python 3.12 gems bindings (put on PYTHONPATH by
+  # subfields/segment_subregions_one.sh).
+  samseg_python: /opt/samseg-py312
+  # Threads for registrations and permutation runs.
+  threads: 12
+
+atlases:
+  # FSL cerebellum maximum-probability atlas, used to crop the atlas reference images.
+  fsl_cerebellum: ${FSLDIR}/data/atlases/Cerebellum/Cerebellum-MNIfnirt-maxprob-thr25-1mm.nii.gz
+  # Allen Human Reference Atlas 3D (2020): annotation_full.nii.gz in ICBM 2009b space.
+  allen_hra3d: /atlases/allen_hra3d_2020/annotation_full.nii.gz
+  # ICBM 2009b nonlinear symmetric T1 template that the Allen atlas is defined on.
+  icbm2009b_sym: /atlases/mni_icbm152_nlin_sym_09b/mni_icbm152_t1_tal_nlin_sym_09b_hires.nii
+  # FSL MNI152 1 mm T1 template (JHU, Harvard-Oxford, Brainstem Navigator, and tract atlases).
+  fsl_mni152_1mm: ${FSLDIR}/data/standard/MNI152_T1_1mm.nii.gz
+  # JHU ICBM-DTI-81 white matter labels, 1 mm (FSL).
+  jhu_labels: ${FSLDIR}/data/atlases/JHU/JHU-ICBM-labels-1mm.nii.gz
+  # Harvard-Oxford subcortical maximum-probability atlas, threshold 25%, 1 mm (FSL).
+  harvard_oxford_sub: ${FSLDIR}/data/atlases/HarvardOxford/HarvardOxford-sub-maxprob-thr25-1mm.nii.gz
+  # Brainstem Navigator v1.0 folder (the 2-mm-probabilistic labels in MNI space).
+  brainstem_navigator: /atlases/BrainstemNavigatorv1.0/1.0
+  # Brainstem tract atlas of Tang et al. 2018 (probabilistic tracts in MNI space).
+  brainstem_tracts: /atlases/tang2018
+  # Brainnetome FreeSurfer files (lh.BN_Atlas.gcs, rh.BN_Atlas.gcs, BN_Atlas_246_LUT.txt).
+  brainnetome_fs: /atlases/BN_Atlas_freesurfer
+
+clinical:
+  # participant_id, injury_date, mri_date, and optionally years_since_injury_recorded (used where no injury
+  # date exists); read only by clinical/01_years_since_injury.py, which writes years since injury.
+  injury_dates: /private/clinical/injury_dates.csv
+  # Optional: further outcomes of the clinical stratification family (participant_id plus one column per
+  # measure, already transformed), and covariates per measure where they differ from age, sex, and eTIV.
+  # additional_measures: /private/clinical/additional_measures.csv
+  # additional_covariates: {}
+
+figures:
+  # participant_id of the healthy control shown in Fig. 1A to 1H.
+  example_participant: ""
+  # Folder holding the Arial TrueType files (arial.ttf, arialbd.ttf, ariali.ttf).
+  font_dir: /usr/share/fonts/truetype/msttcorefonts

@@ -1,0 +1,106 @@
+{
+  "name": "supraspina",
+  "desktopName": "supraspina.desktop",
+  "version": "20261122.2152.0",
+  "private": true,
+  "description": "Supraspina is a Linux desktop research console for a 14-stage structural-MRI workflow.",
+  "author": {
+    "name": "Yusuf Qwareeq",
+    "email": "yusuf@qwareeq.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qwareeq8/supraspina.git"
+  },
+  "bugs": {
+    "url": "https://github.com/qwareeq8/supraspina/issues"
+  },
+  "type": "module",
+  "main": "./out/main/index.js",
+  "homepage": "https://qwareeq.com/",
+  "engines": {
+    "node": "^22.13.0 || >=24.0.0"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "start": "electron-vite preview",
+    "typecheck:node": "tsc -p tsconfig.node.json --noEmit",
+    "typecheck:web": "tsc -p tsconfig.web.json --noEmit",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "lint": "eslint .",
+    "check:prod-deps": "node scripts/check-production-deps.mjs",
+    "check:release": "node scripts/check-release.mjs --mode metadata",
+    "check:release:strict": "node scripts/check-release.mjs --mode strict",
+    "check:provenance": "node scripts/generate-third-party-provenance.mjs",
+    "check:screenshots": "node scripts/check-screenshot-provenance.mjs",
+    "check:python-locks": "node scripts/check-python-release-locks.mjs",
+    "provenance:write": "node scripts/generate-third-party-provenance.mjs --write",
+    "version:stamp": "node scripts/stamp-version.mjs",
+    "metadata:node": "electron-vite build && node scripts/generate-node-release-metadata.mjs",
+    "test:scripts": "node --test scripts/*.test.mjs",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,html}\" \"*.{ts,js,mjs,json,yml,md}\" \".github/workflows/*.yml\" \"docs/**/*.md\" \"scripts/*.{mjs,cjs}\" && prettier --write CITATION.cff --parser yaml",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,html}\" \"*.{ts,js,mjs,json,yml,md}\" \".github/workflows/*.yml\" \"docs/**/*.md\" \"scripts/*.{mjs,cjs}\" && prettier --check CITATION.cff --parser yaml",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cov": "vitest run --coverage",
+    "test:cov:critical": "vitest run --config vitest.renderer-critical.config.ts --coverage",
+    "screenshots": "node scripts/shot.cjs",
+    "screenshots:documentation": "node scripts/capture-documentation-screenshots.cjs",
+    "visual:test": "node scripts/visual-matrix.cjs --source",
+    "acceptance:electron": "node scripts/real-electron-ui-check.cjs",
+    "smoke:package": "node scripts/package-smoke.mjs",
+    "build:sidecar": "bash scripts/build-sidecar.sh",
+    "package": "npm run package:linux",
+    "package:linux": "umask 022 && chmod 0644 packaging/icon.png packaging/icons/*.png && npm run build:sidecar && electron-vite build && electron-builder --linux --publish never"
+  },
+  "dependencies": {
+    "electron-log": "5.4.4",
+    "electron-updater": "6.8.9",
+    "zod": "4.4.3"
+  },
+  "overrides": {
+    "brace-expansion": "5.0.9",
+    "js-yaml": "4.3.2",
+    "nanoid": "3.3.18",
+    "@electron/get": {
+      "undici": "7.29.0"
+    },
+    "jsdom": {
+      "undici": "7.29.0"
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@niivue/niivue": "0.69.0",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "25.9.1",
+    "@types/react": "19.2.15",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "5.2.0",
+    "@vitest/coverage-v8": "4.1.11",
+    "ajv": "8.20.0",
+    "axe-core": "4.12.1",
+    "electron": "42.8.1",
+    "electron-builder": "26.15.3",
+    "electron-vite": "5.0.0",
+    "eslint": "10.4.1",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.2",
+    "globals": "17.6.0",
+    "js-yaml": "4.3.2",
+    "jsdom": "29.1.1",
+    "playwright": "1.61.1",
+    "prettier": "3.8.3",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.60.0",
+    "vite": "7.3.6",
+    "vitest": "4.1.11"
+  }
+}

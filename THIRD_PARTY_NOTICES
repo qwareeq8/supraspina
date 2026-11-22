@@ -1,0 +1,283 @@
+Supraspina third-party notices
+==============================
+
+First-party scope
+-----------------
+
+The MIT license in LICENSE applies only to original first-party code and
+documentation owned by Yusuf Qwareeq: the Supraspina desktop application, the
+sidecar, scripts/, the tests, the documentation, the analyses/ paper code, and
+explicitly identified reimplementations. It does not relicense third-party
+software, fonts, scientific source, templates, compiled assets, or data. Those
+components keep their own terms and provenance, listed below and file by file
+in THIRD_PARTY_PROVENANCE.json.
+
+Scientific pipeline assets acquired by the operator
+---------------------------------------------------
+
+The interoperable scientific assets come from:
+
+  ortizo-117/SCI_Map
+  https://github.com/ortizo-117/SCI_Map
+  Pinned commit: 8a8c2d3586a37bb896bd8bdc3743b43e602827e3
+  Pinned codeload archive SHA-256:
+  d6f0c28a19bc71af119774f20d6b82be5d047d21ac78cbc168456c984c28dee7
+
+The pinned upstream tree contains no LICENSE, LICENSE.md, COPYING, or scoped
+Step_2_QA_ENIGMA license file. The official
+ENIGMA-git/ENIGMA-FreeSurfer-protocol repository also reports no repository
+license and contains no root license file at commit
+e04beefc956f4fc782260b0a87cba29097505cd1. Supraspina installers and the
+Supraspina source repository therefore exclude those upstream bytes, and
+Supraspina makes no assertion about their license.
+
+After explicit operator approval, the sidecar, frozen or run from a source
+checkout, downloads the exact pinned archive from the authoritative upstream
+repository, verifies the archive and every selected file, applies the
+documented first-party compatibility transformations to the two wrapper
+scripts, and verifies the final bytes again. The resulting machine-local cache
+stays separate from project data, Supraspina releases, and source checkouts.
+The first scientific run that needs these assets needs network access, unless
+the operator supplies the archive offline as described under Scientific assets
+in docs/installation.md.
+
+The acquisition includes the upstream MATLAB source, templates, and compiled
+ENIGMA QC executables. Supraspina does not bundle MATLAB or MATLAB Runtime; the
+operator installs the selected backend separately under its own terms.
+
+FreeSurfer-derived material
+---------------------------
+
+Some operator-acquired ENIGMA QC source carries FreeSurfer/MGH origin notices,
+which are preserved. The official FreeSurfer Software License Agreement
+Version 1.0 is reproduced at:
+
+  licenses/FreeSurfer-Software-License-1.0.txt
+
+Copying or sublicensing covered FreeSurfer material requires the following
+preface:
+
+  All or portions of this licensed product (such portions are the "Software")
+  have been obtained under license from The General Hospital Corporation "MGH"
+  and are subject to the following terms and conditions:
+
+A user's FreeSurfer license.txt is private activation material, not a public
+redistribution license. Supraspina never reads or copies it, and never includes
+it in an installer, diagnostic bundle, test fixture, or release.
+
+Managed scientific container images
+-----------------------------------
+
+The following scientific container images are acquired only after an explicit
+operator action:
+
+  FreeSurfer SynthStrip 1.8, CPU
+  https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/
+  OCI source: docker.io/freesurfer/synthstrip
+
+  Deep-MI FastSurfer 2.5.4, CPU or CUDA
+  https://github.com/Deep-MI/FastSurfer/releases/tag/v2.5.4
+  OCI source: docker.io/deepmi/fastsurfer
+
+These SIF files stay out of Supraspina's ASAR, AppImage, and deb payloads. They
+are stored in the application's machine-local scientific-resource directory,
+separate from project and subject data. Source images resolve by immutable OCI
+manifest digest, and only the exact release-preparation byte count and SHA-256
+recorded in SCIENTIFIC_RESOURCE_PINS.json are accepted. Operator-selected
+offline imports pass through the same verifier.
+
+The Supraspina MIT license does not relicense these images or their contents;
+the upstream notices and licenses embedded in or accompanying each image apply.
+The FastSurfer 2.5.4 source is licensed under the Apache License 2.0:
+
+  https://github.com/Deep-MI/FastSurfer/blob/v2.5.4/LICENSE
+
+That source license does not relicense third-party or FreeSurfer-derived
+material in the image. FastSurfer execution needs a separate user FreeSurfer
+license.txt, which Supraspina mounts read-only without copying, displaying, or
+hashing it.
+
+PyBrainAge model acquired by the operator
+-----------------------------------------
+
+The PyBrainAge v3 model archive is acquired only through the explicit
+provisioning flow:
+
+  PyBrainAge v3
+  Creator: James Cole, University College London
+  ORCID: 0000-0003-1908-5588
+  Publication date: 2023-12-19
+  DOI: 10.5281/zenodo.10406573
+  https://zenodo.org/records/10406573
+  Asset: PyBrainAge.zip, 108,063,062 bytes
+  SHA-256: c9e2ba3899b8005fba4b9b0991292c6e76de112595473c3e9e0e5b11e0308a95
+
+The Zenodo asset is licensed under Creative Commons Attribution 4.0
+International (CC BY 4.0):
+
+  https://creativecommons.org/licenses/by/4.0/
+
+Work that uses the model attributes it to James Cole and cites the versioned
+DOI. Supraspina records the published size, caps the accepted download size,
+and verifies SHA-256 after operator-authorized acquisition. It extracts
+`ExtraTreesModel` and `scaler.pkl` into the configured output cache. It does
+not bundle the archive, model, or scaler. The related GitHub repository's CC0
+source license is distinct and does not replace the Zenodo asset's CC BY 4.0
+terms.
+
+BrainCharts model and runtime acquired by the operator
+------------------------------------------------------
+
+The BrainCharts lifespan normative model and its runtime are acquired only
+through the explicit setup in Scientific resources, which shows the license
+notice first and proceeds only after the operator accepts it:
+
+  predictive-clinical-neuroscience/braincharts
+  https://github.com/predictive-clinical-neuroscience/braincharts
+  Pinned commit: 5a1a7822e6f54405b0a826cf137d584240af307c
+  Asset: models/lifespan_57K_82sites.zip, 2,796,655 bytes
+  SHA-256: 60457279debb787ea2ce4175191bd2ac16214e84bd260c7dab3d8bf2f1095cc4
+  Site and phenotype lists: docs/site_ids_ct_82sites.txt,
+  docs/phenotypes_ct_lh.txt, docs/phenotypes_ct_rh.txt, and
+  docs/phenotypes_sc.txt at the same commit, each pinned by size and SHA-256
+
+The braincharts repository is licensed under the GNU General Public License
+version 3; its NOTICE reads, verbatim:
+
+  braincharts
+  Copyright 2021 The braincharts Developers.
+
+  This product includes software developed by
+  Saige Rutherford and Andre Marquand.
+
+  This software redistributes pretrained normative models
+  and code for applying them to new data, which is Public
+  domain source code.
+
+The runtime installs pcntoolkit 0.35.0 (GNU General Public License version 3)
+with its dependencies from the hashed lock in
+sidecar/supraspina_sidecar/braincharts_locks/ into the configured output
+directory. The GPL-3.0 terms, as the braincharts repository states them, are
+reproduced at:
+
+  licenses/GPL-3.0.txt
+
+Work that uses the model cites Rutherford S, Fraza C, Dinga R, et al. Charting
+brain growth and aging at high spatial precision. eLife. 2022;11:e72904.
+doi:10.7554/eLife.72904. Supraspina does not bundle or redistribute the model,
+the lists, pcntoolkit, or any runtime package; it verifies each download
+against its pin and keeps the result below the project's output directory.
+
+micromamba
+----------
+
+Supraspina installers include the Linux x86_64 micromamba 2.7.0-0 executable,
+downloaded from mamba-org/micromamba-releases and verified before packaging:
+
+  Linux x86_64:
+  fb4554d61a1c567726890169e39c41aa8495dbba56f50957ee7356572b6c5726
+
+micromamba is Copyright 2019 QuantStack and the Mamba contributors and is
+licensed under the BSD 3-Clause license. The complete terms are reproduced at:
+
+  licenses/micromamba-BSD-3-Clause.txt
+
+Web Computer Modern / New Computer Modern fonts
+-----------------------------------------------
+
+The renderer includes 18 WebCM WOFF2 faces in src/renderer/assets/fonts/: the
+10-point Sans, Serif, and Mono families at weights 400 (Regular), 500 (Book),
+and 700 (Bold), each with its matching italic or oblique face. They load from
+the application bundle only and are never fetched at run time. They are a
+subset of the web-computer-modern package, a WOFF2 conversion of New Computer
+Modern, which derives from Latin Modern:
+
+  Package: web-computer-modern@1.1.0-new-cm-7-0-2
+  https://www.npmjs.com/package/web-computer-modern
+  Original typeface: New Computer Modern 7.0.2
+  https://ctan.org/pkg/newcomputermodern
+  Conversion: WebCM WOFF2 conversion, 2025-05-01
+
+The published conversion manifest, MANIFEST-WebCM.txt, and the license text,
+GUST-FONT-LICENSE.txt, sit beside the faces. The files keep their WebCM names,
+because the GUST Font License requires the names assigned to the converted New
+Computer Modern faces. The fonts are distributed under the GUST Font License
+1.0 or later (LPPL 1.3c or later). The complete terms are reproduced at:
+
+  licenses/GUST-FONT-LICENSE.txt
+
+Latin Modern Roman scientific-figure fonts
+------------------------------------------
+
+The frozen sidecar includes four byte-identical Latin Modern Roman 10 version
+2.004 OpenType/CFF faces from the official CTAN distribution for figure
+typography. They are distributed under the GUST Font License 1.0 or later.
+Their immutable source URLs, byte counts, and SHA-256 values are recorded in:
+
+  licenses/MANIFEST-LM-Roman-Supraspina.txt
+
+The bundled bytes are the complete 821-glyph upstream faces; Supraspina does
+not transform, subset, or rename them.
+
+Application icon
+----------------
+
+The Supraspina icon (src/renderer/assets/brand/supraspina_icon.svg and the
+packaging/icon.png and packaging/icons/ renderings) is based on "Brain stem
+normal human" by Patrick J. Lynch, medical illustrator; C. Carl Jaffe, MD,
+cardiologist; Yale University Center for Advanced Instructional Media:
+
+  https://commons.wikimedia.org/wiki/File:Brain_stem_normal_human.svg
+
+It is distributed under the Creative Commons Attribution 2.5 Generic license:
+
+  https://creativecommons.org/licenses/by/2.5/
+
+Supraspina changed it: recolored, with thicker outlines, and cropped below the
+medulla.
+
+Lucide icons
+------------
+
+The interface icons are drawn from Lucide 1.77.0, with their path data copied
+into the renderer bundle. Lucide is Copyright 2026 Lucide Icons and
+Contributors and is licensed under the ISC license, with the icons derived
+from Feather under the MIT license, Copyright 2013-present Cole Bemis; the
+GitHub mark comes from Feather. The complete terms are reproduced at:
+
+  licenses/Lucide-ISC.txt
+
+Python frozen runtime
+---------------------
+
+The frozen Python 3.12 sidecar includes the exact packages resolved by the
+platform release lock. Each installer includes a CycloneDX manifest and a
+consolidated copy of the license and notice files discovered from the
+installed distribution metadata under dependency-manifests/. The package smoke
+and provenance gates verify these generated records.
+
+Node, Electron, and Chromium
+----------------------------
+
+The Electron application includes the production Node package closure
+recorded by package-lock.json and the pinned Electron runtime. It also
+includes the npm packages that Vite inlines into the renderer bundle, such as
+React and NiiVue (@niivue/niivue, BSD-2-Clause, the brain viewer), which the
+renderer build records in out/renderer/bundled-packages.json. Each installer
+includes a machine-readable distributable manifest and consolidated Node
+package notices, with each package's license text, under
+dependency-manifests/. NiiVue's license text comes from its upstream release
+tag, because its npm package ships none. NiiVue embeds its default font atlas,
+rendered from the Roboto typeface, and its matcap images. Electron's own
+LICENSE and LICENSES.chromium.html stay in the application bundle, and package
+validation requires both files.
+
+The brain viewer reads FreeSurfer's fsaverage template files from the
+operator's FreeSurfer installation at run time; Supraspina does not bundle
+them.
+
+No endorsement
+--------------
+
+Names and marks of upstream projects and contributors identify provenance
+only and do not imply endorsement of Supraspina.

@@ -1,0 +1,214 @@
+{
+  "resolution": [
+    {
+      "name": "bare reference resolves through the last configuration segment",
+      "config": { "paths": { "projectRoot": "/data/study" } },
+      "template": "${projectRoot}/rawdata",
+      "expected": "/data/study/rawdata"
+    },
+    {
+      "name": "dotted reference resolves through the exact key",
+      "config": { "paths": { "projectRoot": "/data/study" } },
+      "template": "${paths.projectRoot}/rawdata",
+      "expected": "/data/study/rawdata"
+    },
+    {
+      "name": "dotted reference that misses stays intact",
+      "config": { "paths": { "rawdataDir": "/data/study/rawdata" } },
+      "template": "${x.rawdataDir}/derived",
+      "expected": "${x.rawdataDir}/derived"
+    },
+    {
+      "name": "number and boolean leaves never resolve",
+      "config": { "runtime": { "threads": 6, "dryRun": true } },
+      "template": "${runtime.threads}/${dryRun}",
+      "expected": "${runtime.threads}/${dryRun}"
+    },
+    {
+      "name": "inner whitespace is trimmed from a reference",
+      "config": { "paths": { "outputDir": "/data/study/out" } },
+      "template": "${ paths.outputDir }/${\toutputDir }/qc",
+      "expected": "/data/study/out//data/study/out/qc"
+    },
+    {
+      "name": "an unknown reference stays intact",
+      "config": { "paths": { "projectRoot": "/data/study" } },
+      "template": "${nope}/x",
+      "expected": "${nope}/x"
+    },
+    {
+      "name": "an exact key outranks a bare alias claimed earlier",
+      "config": {
+        "paths": { "subject": "/data/study/nested" },
+        "subject": "sub-001"
+      },
+      "template": "${subject}|${paths.subject}",
+      "expected": "sub-001|/data/study/nested"
+    },
+    {
+      "name": "the first bare alias wins when two keys share a last segment",
+      "config": {
+        "first": { "outputDir": "/data/first" },
+        "second": { "outputDir": "/data/second" }
+      },
+      "template": "${outputDir}",
+      "expected": "/data/first"
+    },
+    {
+      "name": "nesting settles at the pass limit",
+      "config": {
+        "chain": {
+          "l0": "/root",
+          "l1": "${l0}/1",
+          "l2": "${l1}/2",
+          "l3": "${l2}/3",
+          "l4": "${l3}/4",
+          "l5": "${l4}/5",
+          "l6": "${l5}/6",
+          "l7": "${l6}/7"
+        }
+      },
+      "template": "${chain.l5}",
+      "expected": "/root/1/2/3/4/5"
+    },
+    {
+      "name": "nesting beyond the pass limit keeps the residual reference",
+      "config": {
+        "chain": {
+          "l0": "/root",
+          "l1": "${l0}/1",
+          "l2": "${l1}/2",
+          "l3": "${l2}/3",
+          "l4": "${l3}/4",
+          "l5": "${l4}/5",
+          "l6": "${l5}/6",
+          "l7": "${l6}/7"
+        }
+      },
+      "template": "${chain.l7}",
+      "expected": "${l1}/2/3/4/5/6/7"
+    },
+    {
+      "name": "a reference cycle stops at the pass limit",
+      "config": { "cycle": { "ping": "${pong}", "pong": "${ping}" } },
+      "template": "${cycle.ping}",
+      "expected": "${ping}"
+    }
+  ],
+  "rawdataOverlap": [
+    {
+      "name": "a separated project configuration reports nothing",
+      "pathStyle": "posix",
+      "paths": {
+        "projectRoot": "/data/study",
+        "rawdataDir": "${projectRoot}/rawdata",
+        "derivativesDir": "${projectRoot}/derivatives",
+        "outputDir": "${projectRoot}/outputs/run",
+        "metadataDir": "${projectRoot}/metadata",
+        "qcOutputDir": "${outputDir}/qc_review"
+      },
+      "outputs": {
+        "rootDir": "${paths.outputDir}",
+        "runDir": "${rootDir}",
+        "manifestPath": "${rootDir}/manifest.json"
+      },
+      "blockedFields": [],
+      "overlappingFields": []
+    },
+    {
+      "name": "an unresolved raw data directory blocks the whole check",
+      "pathStyle": "posix",
+      "paths": {
+        "projectRoot": "/data/study",
+        "rawdataDir": "${typo}/rawdata",
+        "derivativesDir": "${projectRoot}/derivatives",
+        "outputDir": "${projectRoot}/outputs/run",
+        "metadataDir": "${projectRoot}/metadata",
+        "qcOutputDir": "${outputDir}/qc_review"
+      },
+      "outputs": {
+        "rootDir": "${paths.outputDir}",
+        "runDir": "${rootDir}",
+        "manifestPath": "${rootDir}/manifest.json"
+      },
+      "blockedFields": ["paths.rawdataDir"],
+      "overlappingFields": []
+    },
+    {
+      "name": "a writable path only the execution resolver could resolve is blocked",
+      "pathStyle": "posix",
+      "paths": {
+        "projectRoot": "/data/study",
+        "rawdataDir": "${projectRoot}/rawdata",
+        "derivativesDir": "${x.rawdataDir}/derived",
+        "outputDir": "${projectRoot}/outputs/run",
+        "metadataDir": "${projectRoot}/metadata",
+        "qcOutputDir": "${outputDir}/qc_review"
+      },
+      "outputs": {
+        "rootDir": "${paths.outputDir}",
+        "runDir": "${rootDir}",
+        "manifestPath": "${rootDir}/manifest.json"
+      },
+      "blockedFields": ["paths.derivativesDir"],
+      "overlappingFields": []
+    },
+    {
+      "name": "an output path left as a cycle is blocked",
+      "pathStyle": "posix",
+      "paths": {
+        "projectRoot": "/data/study",
+        "rawdataDir": "${projectRoot}/rawdata",
+        "derivativesDir": "${projectRoot}/derivatives",
+        "outputDir": "${projectRoot}/outputs/run",
+        "metadataDir": "${projectRoot}/metadata",
+        "qcOutputDir": "${outputDir}/qc_review"
+      },
+      "outputs": {
+        "rootDir": "${runDir}",
+        "runDir": "${rootDir}",
+        "manifestPath": "${paths.outputDir}/manifest.json"
+      },
+      "blockedFields": ["outputs.rootDir", "outputs.runDir"],
+      "overlappingFields": []
+    },
+    {
+      "name": "a resolved writable path inside the raw data still collides",
+      "pathStyle": "posix",
+      "paths": {
+        "projectRoot": "/data/study",
+        "rawdataDir": "${projectRoot}/rawdata",
+        "derivativesDir": "${rawdataDir}/derived",
+        "outputDir": "${projectRoot}/outputs/run",
+        "metadataDir": "${projectRoot}/metadata",
+        "qcOutputDir": "${outputDir}/qc_review"
+      },
+      "outputs": {
+        "rootDir": "${paths.outputDir}",
+        "runDir": "${rootDir}",
+        "manifestPath": "${rootDir}/manifest.json"
+      },
+      "blockedFields": [],
+      "overlappingFields": ["paths.derivativesDir"]
+    },
+    {
+      "name": "an unresolved path and a real collision are both reported",
+      "pathStyle": "posix",
+      "paths": {
+        "projectRoot": "/data/study",
+        "rawdataDir": "${projectRoot}/rawdata",
+        "derivativesDir": "${rawdataDir}/derived",
+        "outputDir": "${projectRoot}/outputs/run",
+        "metadataDir": "${projectRoot}/metadata",
+        "qcOutputDir": "${x.outputDir}/qc_review"
+      },
+      "outputs": {
+        "rootDir": "${paths.outputDir}",
+        "runDir": "${rootDir}",
+        "manifestPath": "${rootDir}/manifest.json"
+      },
+      "blockedFields": ["paths.qcOutputDir"],
+      "overlappingFields": ["paths.derivativesDir"]
+    }
+  ]
+}

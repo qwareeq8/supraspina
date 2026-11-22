@@ -1,0 +1,128 @@
+# electron-builder packaging configuration.
+#
+# Electron bundles Chromium. The Python orchestration sidecar is built locally
+# and ships as a Linux frozen bundle under resources/sidecar/ before
+# electron-builder runs.
+# The PyBrainAge conda environment and the 108 MB model archive are not bundled;
+# they are provisioned explicitly through the bundled, verified micromamba
+# executable and a pinned Zenodo fetch. Upstream scientific assets with
+# unresolved redistribution terms are acquired only through the checksum-pinned,
+# operator-approved sidecar flow.
+appId: io.github.qwareeq8.supraspina
+productName: Supraspina
+copyright: Copyright (c) 2026 Yusuf Qwareeq
+# Installer and artifact files are named with the package name (supraspina),
+# version, and arch. Filenames stay space-free and URL-safe because productName
+# "Supraspina" has a space.
+artifactName: ${name}-${version}-${arch}.${ext}
+# The stamped release date keeps latest-linux.yml deterministic across rebuilds.
+releaseInfo:
+  releaseDate: '2026-11-22'
+# This is the static-runtime toolset. The legacy toolset writes "--no-sandbox"
+# into the embedded desktop entry, disabling the Chromium sandbox on desktop
+# launch.
+toolsets:
+  appimage: '1.0.3'
+directories:
+  output: release
+  # The app icon (icon.png) lives in buildResources, and electron-builder
+  # derives each per-OS desktop or installer icon from it. The icon sits outside
+  # the gitignored build/ tree so it remains committed and local packaging stays
+  # reproducible.
+  buildResources: packaging
+files:
+  - out/**/*
+  - '!**/*.map'
+extraResources:
+  # The app icon is copied into the packaged resources for the runtime window
+  # icon.
+  - from: packaging/icon.png
+    to: icon.png
+  # The frozen Python sidecar launcher and runtime for the Linux target.
+  - from: resources/sidecar
+    to: sidecar
+    filter:
+      - '**/*'
+  # The verified micromamba executable provisions the PyBrainAge environment.
+  - from: resources/micromamba
+    to: micromamba
+    filter:
+      - 'micromamba'
+  # The first-party scope, reviewed third-party inventory, and complete public
+  # terms.
+  - from: LICENSE
+    to: LICENSE
+  - from: THIRD_PARTY_NOTICES
+    to: THIRD_PARTY_NOTICES
+  - from: THIRD_PARTY_PROVENANCE.json
+    to: THIRD_PARTY_PROVENANCE.json
+  - from: licenses
+    to: licenses
+    filter:
+      - '**/*'
+  # These manifests are generated from the exact installed Node/Electron and
+  # Python release locks.
+  - from: build/release-metadata/dependency-manifests
+    to: dependency-manifests
+    filter:
+      - node-distributable.cyclonedx.json
+      - node-distributable.json
+      - node-third-party-notices.txt
+      - python-release-linux-x86_64.cyclonedx.json
+      - python-release-linux-x86_64-notices.txt
+      - release-package-manifest.json
+  - from: package-lock.json
+    to: dependency-manifests/package-lock.json
+  - from: sidecar/requirements
+    to: dependency-manifests/python-locks
+    filter:
+      - release-linux-x86_64.txt
+      - release-toolchain.json
+asar: true
+# These are the public GitHub release coordinates. Packaged builds read the
+# generated latest-linux.yml channel file from this repository's Releases.
+publish:
+  provider: github
+  owner: qwareeq8
+  repo: supraspina
+# Linux is the sole product target.
+linux:
+  target:
+    - AppImage
+    - deb
+  # The installed desktop filename stays aligned with Electron's app_id and
+  # StartupWMClass so desktop shells associate the running window correctly.
+  syncDesktopName: true
+  # The full hicolor ladder lets each shell pick a native size.
+  icon: packaging/icons
+  category: Science
+  maintainer: Yusuf Qwareeq <yusuf@qwareeq.com>
+  vendor: Yusuf Qwareeq
+  synopsis: Research workflow console for the Supraspina structural-MRI pipeline
+appImage:
+  # No launcher arguments, so the desktop entry stays at "Exec=AppRun %U".
+  executableArgs: []
+deb:
+  # Electron does not require WebKitGTK, so these are the standard GTK
+  # dependencies. This list restores electron-builder's default runtime
+  # dependencies because a custom depends list replaces the defaults instead of
+  # extending them. The .deb stays installable on a minimal or headless desktop
+  # as well as a full GNOME session.
+  depends:
+    - libasound2t64 | libasound2
+    - libgbm1
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0
+    - xdg-utils
+  packageCategory: science
+  priority: optional
+# Windows and macOS are not native electron-builder targets. The supported
+# WSL2 run path runs the Linux app and scientific tools inside WSL2 with WSLg
+# (see docs/installation.md, "WSL2"). There is no native nsis,
+# msi, or dmg installer.

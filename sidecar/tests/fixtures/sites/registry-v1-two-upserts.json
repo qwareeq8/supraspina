@@ -1,0 +1,39 @@
+{
+  "records": {
+    "sub-001": {
+      "age": 41.5,
+      "ais": null,
+      "cohortRole": "healthy",
+      "qc": null,
+      "qcNote": "",
+      "qcTags": [],
+      "revision": 1,
+      "runnable": false,
+      "sex": "F",
+      "sourceCohortLabel": "CTRL",
+      "subjectId": "sub-001",
+      "t1Availability": "missing",
+      "tSinceSci": null,
+      "unavailableReason": "Refresh discovery for this registry record.",
+      "updatedAt": "2026-09-30T00:00:00+00:00"
+    },
+    "sub-002": {
+      "age": null,
+      "ais": "C",
+      "cohortRole": "sci-neuropathic-pain",
+      "qc": null,
+      "qcNote": "",
+      "qcTags": [],
+      "revision": 1,
+      "runnable": false,
+      "sex": "M",
+      "sourceCohortLabel": "SCI_P",
+      "subjectId": "sub-002",
+      "t1Availability": "missing",
+      "tSinceSci": 3.5,
+      "unavailableReason": "Refresh discovery for this registry record.",
+      "updatedAt": "2026-09-30T00:00:00+00:00"
+    }
+  },
+  "schemaVersion": 1
+}

@@ -1,0 +1,21 @@
+# Line-ending normalization. Text files are stored and checked out as LF so a
+# Windows clone with autocrlf never CRLF-mangles the PyInstaller build script or
+# the shipped ENIGMA shell wrappers that run under Linux or WSL.
+* text=auto eol=lf
+
+# Sources and scripts executed on POSIX or WSL stay LF.
+*.sh   text eol=lf
+*.py   text eol=lf
+*.R    text eol=lf
+*.Rmd  text eol=lf
+*.ts   text eol=lf
+*.tsx  text eol=lf
+
+# Binary assets stay unnormalized.
+*.png       binary
+*.woff2     binary
+*.zip       binary
+*.pkl       binary
+*.AppImage  binary
+*.deb       binary
+*.node      binary

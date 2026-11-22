@@ -1,0 +1,11 @@
+# Lint settings for the paper's analysis scripts.
+line-length = 120
+target-version = "py311"
+
+[lint]
+select = ["E", "F", "W", "I", "B"]
+# Short mathematical names (X, Z, B, T0) follow the model notation.
+ignore = ["E741", "B905"]
+
+[lint.isort]
+known-first-party = ["config", "stats_lib", "family_models", "permutation", "figlib", "dartel_common", "dbmwb", "cortex_common", "thalamus_common", "clinical_lib", "montage"]
