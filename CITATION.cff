@@ -10,9 +10,21 @@ authors:
   - given-names: 'Yusuf'
     family-names: 'Qwareeq'
     email: 'yusuf@qwareeq.com'
+    orcid: 'https://orcid.org/0000-0002-5441-0668'
+    affiliation: 'Department of Neurological Surgery, Thomas Jefferson University; Department of Electrical and Computer Engineering, Temple University'
 repository-code: 'https://github.com/qwareeq8/supraspina'
 url: 'https://qwareeq.com/'
 license: MIT
+keywords:
+  - neuroimaging
+  - MRI
+  - structural MRI
+  - FreeSurfer
+  - brain age
+  - spinal cord injury
+  - research software
+  - Electron
+  - Linux
 references:
   - type: software
     title: 'SCI_Map (structural-MRI pipeline)'
