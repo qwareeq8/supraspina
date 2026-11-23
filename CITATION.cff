@@ -4,6 +4,7 @@ type: software
 title: 'Supraspina'
 version: '20261122.2152.0'
 date-released: '2026-11-22'
+doi: '10.5281/zenodo.24451026'
 abstract: 'Supraspina is a Linux Electron research console for a 14-stage structural-MRI workflow. It drives SynthStrip, FreeSurfer recon-all or FastSurfer, ENIGMA QC, PyBrainAge inference, BrainCharts normative modeling, and Rscript through supervised subprocesses; manages durable workflow scheduling, provenance, recovery, and process-tree cancellation; and presents cohort status, QC, results, and project configuration for review. Pipeline glue and downstream analysis stages use explicitly inventoried first-party implementations. The repository also includes the analysis code of a paper in analyses/. Supraspina is not a medical device or clinical decision system.'
 authors:
   - given-names: 'Yusuf'

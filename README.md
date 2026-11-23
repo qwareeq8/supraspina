@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/qwareeq8/supraspina/actions/workflows/quality-gates.yml/badge.svg)](https://github.com/qwareeq8/supraspina/actions/workflows/quality-gates.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24451026.svg)](https://doi.org/10.5281/zenodo.24451026)
 
 Supraspina is a Linux desktop console for research teams that operate a 14-stage
 structural-MRI workflow. The Electron application configures projects, shows
@@ -110,7 +111,9 @@ The scientific baseline is SCI_Map at pinned commit
 Neither SCI_Map nor the ENIGMA QC protocol it includes has a license, so this
 repository and its packages contain none of their files; Supraspina downloads
 them from that commit at run time. Cite Supraspina with
-[`CITATION.cff`](CITATION.cff), and cite SCI_Map when its methods or outputs
+[`CITATION.cff`](CITATION.cff); Zenodo archives every release under
+[doi:10.5281/zenodo.24451026](https://doi.org/10.5281/zenodo.24451026), which
+lists the DOI of each version. Cite SCI_Map when its methods or outputs
 support the work. BrainCharts z-scores also require citing Rutherford et al.
 2022, eLife 11:e72904 (doi:10.7554/eLife.72904). The BrainCharts model and
 pcntoolkit are GPL-3.0, and the operator downloads them from their official
