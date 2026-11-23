@@ -87,7 +87,7 @@ export const nodeReleaseMetadataNames = Object.freeze([
   releasePackageManifestName,
 ])
 /** The reviewed Electron runtime version for every distributable. */
-export const electronRuntimeVersion = '42.8.1'
+export const electronRuntimeVersion = '42.11.18'
 /** The reviewed Electron and Chromium license-file contract. */
 export const electronRuntimeLicenseContract = Object.freeze([
   Object.freeze({

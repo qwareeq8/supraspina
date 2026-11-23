@@ -60,7 +60,7 @@ test('Node distributable manifest includes production closure and Electron', asy
   })
   const names = new Set(manifest.packages.map((item) => item.name))
 
-  assert.equal(manifest.embeddedElectron, '42.8.1')
+  assert.equal(manifest.embeddedElectron, '42.11.18')
   assert.deepEqual(
     manifest.electronRuntimeLicenses,
     electronRuntimeLicenseContract.map(({ name, bytes, sha256 }) => ({
@@ -93,7 +93,7 @@ test('Node distributable manifest includes production closure and Electron', asy
   assert(
     sbom.components.some(
       (component) =>
-        component.name === 'electron' && component.version === '42.8.1',
+        component.name === 'electron' && component.version === '42.11.18',
     ),
   )
 
